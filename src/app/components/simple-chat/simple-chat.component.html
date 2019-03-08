@@ -1,0 +1,9 @@
+<input (keyup.enter)="talk()" class="form-control form-control-lg" [(ngModel)]="mensaje" name="chat" type="text"
+  placeholder="Hola, ¿Qué tal?">
+<div class="container-fluid">
+  <div class="row" *ngFor="let texto of mensajes">
+    <div class="col-md-11 col-sm-6 col-xs-12">
+      <p [ngClass]="{'speech-bubble-bot': texto.bot, 'speech-bubble': !texto.bot}">{{texto.content}}</p>
+    </div>
+  </div>
+</div>

@@ -1,11 +1,9 @@
 export class Message {
   content: string;
-  timestamp: Date;
-  avatar: string;
+  bot: boolean;
 
-  constructor(content: string, avatar: string, timestamp?: Date) {
+  constructor(content: string, bot: boolean) {
     this.content = content;
-    this.timestamp = timestamp;
-    this.avatar = avatar;
+    this.bot = bot;
   }
 }

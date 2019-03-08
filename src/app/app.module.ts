@@ -8,9 +8,15 @@ import { AppComponent } from "./app.component";
 import { NavbarComponent } from "./components/header/header.component";
 import { AuthComponent } from "./components/auth-component/auth.component";
 import { DialogflowService } from "./services/dialogflow.service";
+import { SimpleChatComponent } from "./components/simple-chat/simple-chat.component";
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, AuthComponent],
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    AuthComponent,
+    SimpleChatComponent
+  ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [DialogflowService],
   bootstrap: [AppComponent]
