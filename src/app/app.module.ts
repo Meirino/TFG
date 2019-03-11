@@ -10,6 +10,7 @@ import { AuthComponent } from "./components/auth-component/auth.component";
 import { DialogflowService } from "./services/dialogflow.service";
 import { SimpleChatComponent } from "./components/simple-chat/simple-chat.component";
 import { AuthService } from "./services/auth.service";
+import { UserService } from "./services/user.service";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { AuthService } from "./services/auth.service";
     SimpleChatComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
-  providers: [DialogflowService, AuthService],
+  providers: [DialogflowService, AuthService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

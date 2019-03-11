@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { AuthService, User } from "src/app/services/auth.service";
+import { AuthService, LoginInfo } from "src/app/services/auth.service";
+import { User, UserService } from "src/app/services/user.service";
 
 @Component({
   selector: "bot-auth",
@@ -7,10 +8,14 @@ import { AuthService, User } from "src/app/services/auth.service";
   styleUrls: ["./auth.component.scss"]
 })
 export class AuthComponent implements OnInit {
-  private newUserRegister: User = { username: "", password: "" };
-  private loginInfo: User = { username: "", password: "" };
-  private loggedUser: User = undefined;
-  constructor(private auth: AuthService) {}
+  private newUserRegister: User = {
+    username: "",
+    password: "",
+    email: "",
+    avatarURL: ""
+  };
+  private loginInfo: LoginInfo = { email: "", password: "password" };
+  constructor(private auth: AuthService, private userService: UserService) {}
 
   ngOnInit() {}
 
@@ -22,7 +27,7 @@ export class AuthComponent implements OnInit {
 
   public login() {
     this.auth.login(this.loginInfo).subscribe(res => {
-      this.loggedUser = res;
+      this.userService.currentUser = res;
     });
   }
 }

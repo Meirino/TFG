@@ -2,20 +2,19 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
+import { User } from "./user.service";
 
-export class User {
-  username: string;
+export interface LoginInfo {
+  email: string;
   password: string;
-
-  constructor(user: string, pass: string) {
-    (this.username = user), (this.password = pass);
-  }
 }
 
-interface loginRes {
+export interface loginRes {
   user: {
     username: string;
     password: string;
+    email: string;
+    avatarURL: string;
   };
 }
 
@@ -34,10 +33,16 @@ export class AuthService {
     );
   }
 
-  public login(user: User): Observable<User> {
+  public login(user: LoginInfo): Observable<User> {
+    console.log(user);
     return this.http.post<loginRes>(this.baseURL + "login", user).pipe(
       map(res => {
-        return new User(res.user.username, res.user.password);
+        return new User(
+          res.user.username,
+          res.user.password,
+          res.user.email,
+          res.user.avatarURL
+        );
       })
     );
   }

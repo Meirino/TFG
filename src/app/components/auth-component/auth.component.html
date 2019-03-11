@@ -1,4 +1,5 @@
-<h1 *ngIf="loggedUser">Usuario: {{loggedUser.username}}</h1>
+<h1 *ngIf="this.userService.currentUser">Usuario: {{ this.userService.currentUser.username }}</h1>
+<img *ngIf="this.userService.currentUser" src="http://localhost:4000/{{ this.userService.currentUser.avatarURL }}" />
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-6 col-xs-12">
@@ -7,20 +8,22 @@
           <h4 class="card-title">Login</h4>
           <form (ngSubmit)="login()">
             <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <input [(ngModel)]="this.loginInfo.username" type="email" class="form-control" id="exampleInputEmail1"
-                aria-describedby="emailHelp" placeholder="Enter email" name="username">
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-              <small>{{this.loginInfo.username}}</small>
+              <label for="exampleInputEmail2">Email address</label>
+              <input [(ngModel)]="this.loginInfo.email" type="email" class="form-control" id="exampleInputEmail2"
+                aria-describedby="emailHelp" placeholder="Enter email" name="username" />
+              <small id="emailHelp" class="form-text text-muted">
+                We'll never share your email with anyone else.
+              </small>
+              <small>{{ this.loginInfo.username }}</small>
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Password</label>
               <input [(ngModel)]="this.loginInfo.password" type="password" class="form-control" id="exampleInputPassword1"
-                placeholder="Password" name="password">
-              <small>{{this.loginInfo.password}}</small>
+                placeholder="Password" name="password" />
+              <small>{{ this.loginInfo.password }}</small>
             </div>
             <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1" />
               <label class="form-check-label" for="exampleCheck1">Check me out</label>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -34,21 +37,27 @@
           <h4 class="card-title">Registro</h4>
           <form (ngSubmit)="register()">
             <div class="form-group">
+              <label for="exampleInputEmail3">Nombre de usuario</label>
+              <input type="email" [(ngModel)]="this.newUserRegister.username" class="form-control" id="exampleInputEmail3"
+                aria-describedby="emailHelp" placeholder="Enter username" name="username" />
+              <small>{{ this.newUserRegister.username }}</small>
+            </div>
+            <div class="form-group">
               <label for="exampleInputEmail1">Email address</label>
-              <input type="email" [(ngModel)]="this.newUserRegister.username" class="form-control" id="exampleInputEmail1"
-                aria-describedby="emailHelp" placeholder="Enter email" name="username">
+              <input type="email" [(ngModel)]="this.newUserRegister.email" class="form-control" id="exampleInputEmail1"
+                aria-describedby="emailHelp" placeholder="Enter email" name="email" />
               <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-              <small>{{this.newUserRegister.username}}</small>
+              <small>{{ this.newUserRegister.email }}</small>
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Password</label>
               <input type="password" [(ngModel)]="this.newUserRegister.password" class="form-control" id="exampleInputPassword1"
-                placeholder="Password" name="password">
-              <small>{{this.newUserRegister.password}}</small>
+                placeholder="Password" name="password" />
+              <small>{{ this.newUserRegister.password }}</small>
             </div>
             <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+              <input type="checkbox" class="form-check-input" id="exampleCheck2" />
+              <label class="form-check-label" for="exampleCheck2">Check me out</label>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>

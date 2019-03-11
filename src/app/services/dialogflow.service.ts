@@ -3,11 +3,6 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Message } from "../models/message";
-
-interface response {
-  speech: string;
-}
 
 @Injectable()
 export class DialogflowService {

@@ -1,9 +1,17 @@
 <input (keyup.enter)="talk()" class="form-control form-control-lg" [(ngModel)]="mensaje" name="chat" type="text"
   placeholder="Hola, ¿Qué tal?">
-<div class="container-fluid">
+<div class="container-fluid" id="text-chat">
   <div class="row" *ngFor="let texto of mensajes">
-    <div class="col-md-11 col-sm-6 col-xs-12">
+    <div class="col-md-1 col-sm-6 col-xs-2">
+      <img *ngIf="!texto.bot" class="img-fluid rounded-circle" src="http://localhost:4000/{{texto.user.avatarURL}}">
+      <small class="username" *ngIf="!texto.bot">{{texto.user.username}}</small>
+    </div>
+    <div class="col-md-10 col-sm-6 col-xs-10">
       <p [ngClass]="{'speech-bubble-bot': texto.bot, 'speech-bubble': !texto.bot}">{{texto.content}}</p>
+    </div>
+    <div class="col-md-1 col-sm-6 col-xs-2">
+      <img *ngIf="texto.bot" class="img-fluid rounded-circle" src="http://localhost:4000/{{texto.user.avatarURL}}">
+      <small class="username" *ngIf="texto.bot">{{texto.user.username}}</small>
     </div>
   </div>
 </div>
