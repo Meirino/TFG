@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Input, Output } from "@angular/core";
+import { UserService } from "src/app/services/user.service";
 
 @Component({
   selector: "bot-navbar",
@@ -6,7 +7,7 @@ import { Component, OnInit, EventEmitter, Input, Output } from "@angular/core";
   styleUrls: ["./header.component.scss"]
 })
 export class NavbarComponent implements OnInit {
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   ngOnInit() {}
 }
