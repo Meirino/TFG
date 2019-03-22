@@ -8,14 +8,14 @@ import { User, UserService } from "src/app/services/user.service";
   styleUrls: ["./auth.component.scss"]
 })
 export class AuthComponent implements OnInit {
-  private newUserRegister: User = {
+  public newUserRegister: User = {
     username: "",
     password: "",
     email: "",
     avatarURL: ""
   };
-  private loginInfo: LoginInfo = { email: "", password: "password" };
-  constructor(private auth: AuthService, private userService: UserService) {}
+  public loginInfo: LoginInfo = { email: "", password: "password" };
+  constructor(public auth: AuthService, public userService: UserService) {}
 
   ngOnInit() {}
 

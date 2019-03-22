@@ -6,15 +6,15 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable()
 export class DialogflowService {
-  private baseURL: string = "https://api.dialogflow.com/v1/query?v=20150910";
-  private token: string = environment.token;
-  private httpOptions = {
+  public baseURL: string = "https://api.dialogflow.com/v1/query?v=20150910";
+  public token: string = environment.token;
+  public httpOptions = {
     headers: new HttpHeaders({
       Authorization: `Bearer ${this.token}`
     })
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(public http: HttpClient) {}
 
   public getResponse(query: string): Observable<string> {
     let data = {

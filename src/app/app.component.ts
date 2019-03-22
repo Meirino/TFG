@@ -9,7 +9,7 @@ import { DialogflowService } from "./services/dialogflow.service";
 export class AppComponent {
   title = "TFG-Angular";
 
-  constructor(private dialog: DialogflowService) {}
+  constructor(public dialog: DialogflowService) {}
 
   talk(texto: string = "Hola mundo") {
     this.dialog.getResponse(texto).subscribe(response => console.log(response));

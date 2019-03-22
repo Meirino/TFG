@@ -13,8 +13,8 @@ export class SimpleChatComponent implements OnInit {
   mensajes = [];
 
   constructor(
-    private dialog: DialogflowService,
-    private userService: UserService
+    public dialog: DialogflowService,
+    public userService: UserService
   ) {}
 
   talk() {

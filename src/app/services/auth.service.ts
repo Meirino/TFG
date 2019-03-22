@@ -20,10 +20,10 @@ export interface loginRes {
 
 @Injectable()
 export class AuthService {
-  private baseURL: string = "http://localhost:4000/api/";
-  private Register: User;
+  public baseURL: string = "http://localhost:4000/api/";
+  public Register: User;
 
-  constructor(private http: HttpClient) {}
+  constructor(public http: HttpClient) {}
 
   public register(user: User): Observable<string> {
     return this.http.post<User>(this.baseURL + "register", user).pipe(
