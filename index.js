@@ -19,13 +19,20 @@ const app = express();
 const port = 4000;
 
 function buscarUsuario(email, callback) {
-  for (var i = 0, len = users.length; i < len; i++) {
-    var user = users[i];
-    if (user.email === email) {
-      // callback takes arguments (error,user)
-      return callback(null, user);
-    }
-  }
+  const connection = mysql.createConnection(connection_data);
+  const selectUser = squel.select()
+    .field("username")
+    .field("usermail", "email")
+    .field("password")
+    .from("users", "u")
+    .where("u.usermail = ?", email)
+    .toString();
+
+  connection.connect();
+  connection.query(selectUser, (err, result) => {
+    result = result[0];
+    return callback(null, result);
+  });
   return callback(null, null);
 }
 
@@ -47,15 +54,23 @@ passport.use(
             message: "Este usuario no existe."
           });
         } else {
-          if (user.password === password) {
-            console.log("good username and password");
-            return done(null, user);
-          } else {
-            console.log("good username and bad password");
-            return done(null, false, {
-              message: "Incorrect password."
-            });
-          }
+          bcrypt.compare(password, user.password, function (err, res) {
+            if (res) {
+              console.log("good username and password");
+              user = {
+                username: user.username,
+                email: user.email,
+                password: user.password,
+                avatarURL: "/avatars/01.jpg"
+              }
+              return done(null, user)
+            } else {
+              console.log("good username and bad password");
+              return done(null, false, {
+                message: "Incorrect password."
+              });
+            }
+          });
         }
       });
     }
