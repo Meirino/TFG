@@ -14,8 +14,14 @@ export class AuthComponent implements OnInit {
     email: "",
     avatarURL: ""
   };
+  public errorMessage: string;
   public loginInfo: LoginInfo = { email: "", password: "password" };
-  constructor(public auth: AuthService, public userService: UserService) {}
+
+  constructor(public auth: AuthService, public userService: UserService) {
+    this.auth.getLoginErrors().subscribe(error => {
+      this.errorMessage = error;
+    });
+  }
 
   ngOnInit() {}
 
@@ -26,8 +32,12 @@ export class AuthComponent implements OnInit {
   }
 
   public login() {
-    this.auth.login(this.loginInfo).subscribe(res => {
-      this.userService.currentUser = res;
-    });
+    try {
+      this.auth.login(this.loginInfo).subscribe(res => {
+        this.userService.currentUser = res;
+      });
+    } catch (error) {
+      console.log("Error");
+    }
   }
 }

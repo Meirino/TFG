@@ -6,26 +6,25 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable()
 export class DialogflowService {
-  public baseURL: string = "https://api.dialogflow.com/v1/query?v=20150910";
+  public baseURL: string = "http://localhost:4000/api/chat";
   public token: string = environment.token;
   public httpOptions = {
     headers: new HttpHeaders({
-      Authorization: `Bearer ${this.token}`
+      "Content-Type": "application/json"
     })
   };
 
   constructor(public http: HttpClient) {}
 
   public getResponse(query: string): Observable<string> {
-    let data = {
-      query: query,
-      lang: "es",
-      sessionId: "12345"
-    };
-    return this.http.post<any>(`${this.baseURL}`, data, this.httpOptions).pipe(
-      map(res => {
-        return res.result.fulfillment.speech;
-      })
-    );
+    let data = {};
+    return this.http
+      .post<any>(this.baseURL, { mensaje: query }, this.httpOptions)
+      .pipe(
+        map(res => {
+          console.log(res);
+          return res.text;
+        })
+      );
   }
 }

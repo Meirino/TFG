@@ -1,7 +1,4 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
-import { HttpClient } from "@angular/common/http";
 
 export class User {
   username: string;

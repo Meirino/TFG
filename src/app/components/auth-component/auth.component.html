@@ -3,32 +3,20 @@
     <div class="col m6 x12">
       <div class="card">
         <div class="card-body">
+          {{errorMessage}}
           <h4 class="card-title">Login</h4>
           <form (ngSubmit)="login()">
             <div class="input-field">
               <label for="exampleInputEmail2">Correo Electrónico</label>
               <br />
-              <input
-                [(ngModel)]="this.loginInfo.email"
-                type="email"
-                class="form-control"
-                id="exampleInputEmail2"
-                aria-describedby="emailHelp"
-                placeholder="Introduzca su correo"
-                name="username"
-              />
+              <input [(ngModel)]="this.loginInfo.email" type="email" class="form-control" id="exampleInputEmail2"
+                aria-describedby="emailHelp" placeholder="Introduzca su correo" name="username" />
             </div>
             <div class="input-field">
               <label for="exampleInputPassword1">Contraseña</label>
               <br />
-              <input
-                [(ngModel)]="this.loginInfo.password"
-                type="password"
-                class="form-control"
-                id="exampleInputPassword1"
-                placeholder="Password"
-                name="password"
-              />
+              <input [(ngModel)]="this.loginInfo.password" type="password" class="form-control"
+                id="exampleInputPassword1" placeholder="Password" name="password" />
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
@@ -43,40 +31,20 @@
             <div class="input-field">
               <label for="exampleInputEmail3">Nombre de usuario</label>
               <br />
-              <input
-                type="email"
-                [(ngModel)]="this.newUserRegister.username"
-                class="form-control"
-                id="exampleInputEmail3"
-                aria-describedby="emailHelp"
-                placeholder="Enter username"
-                name="username"
-              />
+              <input type="email" [(ngModel)]="this.newUserRegister.username" class="form-control"
+                id="exampleInputEmail3" aria-describedby="emailHelp" placeholder="Enter username" name="username" />
             </div>
             <div class="input-field">
               <label for="exampleInputEmail1">Correo electrónico</label>
               <br />
-              <input
-                type="email"
-                [(ngModel)]="this.newUserRegister.email"
-                class="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-                placeholder="Enter email"
-                name="email"
-              />
+              <input type="email" [(ngModel)]="this.newUserRegister.email" class="form-control" id="exampleInputEmail1"
+                aria-describedby="emailHelp" placeholder="Enter email" name="email" />
             </div>
             <div class="input-field">
               <label for="exampleInputPassword1">Contraseña</label>
               <br />
-              <input
-                type="password"
-                [(ngModel)]="this.newUserRegister.password"
-                class="form-control"
-                id="exampleInputPassword1"
-                placeholder="Password"
-                name="password"
-              />
+              <input type="password" [(ngModel)]="this.newUserRegister.password" class="form-control"
+                id="exampleInputPassword1" placeholder="Password" name="password" />
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>

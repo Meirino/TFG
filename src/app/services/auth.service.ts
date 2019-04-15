@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
 import { User } from "./user.service";
+import { Subject } from "rxjs";
 
 export interface LoginInfo {
   email: string;
@@ -18,12 +19,21 @@ export interface loginRes {
   };
 }
 
+export interface errorRes {
+  info: string;
+}
+
 @Injectable()
 export class AuthService {
   public baseURL: string = "http://localhost:4000/api/";
   public Register: User;
+  private logInErrorSubject = new Subject<string>();
 
   constructor(public http: HttpClient) {}
+
+  public getLoginErrors(): Subject<string> {
+    return this.logInErrorSubject;
+  }
 
   public register(user: User): Observable<string> {
     return this.http.post<User>(this.baseURL + "register", user).pipe(
@@ -34,16 +44,19 @@ export class AuthService {
   }
 
   public login(user: LoginInfo): Observable<User> {
-    console.log(user);
-    return this.http.post<loginRes>(this.baseURL + "login", user).pipe(
-      map(res => {
-        return new User(
-          res.user.username,
-          res.user.password,
-          res.user.email,
-          res.user.avatarURL
-        );
-      })
-    );
+    try {
+      return this.http.post<loginRes>(this.baseURL + "login", user).pipe(
+        map(res => {
+          return new User(
+            res.user.username,
+            res.user.password,
+            res.user.email,
+            res.user.avatarURL
+          );
+        })
+      );
+    } catch (error) {
+      this.logInErrorSubject.next("Datos incorrectos");
+    }
   }
 }
