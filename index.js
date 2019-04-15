@@ -9,6 +9,7 @@ const passport = require("passport");
 
 // Controladores
 const loginController = require('./controladores/logincontroller');
+const chatController = require('./controladores/chatcontroller');
 
 // Puerto a usar
 const port = 4000;
@@ -53,6 +54,12 @@ app.post("/api/register", function (req, res) {
   } else {
     res.status(500);
   }
+});
+
+app.post("/api/chat", async (req, res) => {
+  console.log(req.body);
+  let respuesta = await chatController.makePost(req.body.mensaje);
+  res.status(200).send(respuesta);
 });
 
 // Escuchando nuestro servidor Node
