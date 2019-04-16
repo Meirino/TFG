@@ -58,7 +58,7 @@ app.post("/api/register", function (req, res) {
 
 app.post("/api/chat", async (req, res) => {
   console.log(req.body);
-  let respuesta = await chatController.makePost(req.body.mensaje);
+  let respuesta = await chatController.makePost(req.body.mensaje, req.body.context);
   res.status(200).send(respuesta);
 });
 

@@ -1,10 +1,28 @@
 const dialogflow = require("dialogflow");
 const uuid = require("uuid");
+const sessionId = uuid.v4();
 
-exports.makePost = async (input_text, projectId = "test-agent-98155") => {
-  // A unique identifier for the given session
-  const sessionId = uuid.v4();
+async function createContext(projectId, name) {
+  const contextClient = new dialogflow.ContextsClient();
 
+  const contextData = {
+    name: contextClient.contextPath(projectId, sessionId, name),
+    lifespanCount: 3
+  };
+
+  const context = await contextClient.createContext({
+    parent: sessionPath,
+    context: contextData
+  });
+
+  return context;
+}
+
+exports.makePost = async (
+  input_text,
+  context,
+  projectId = "test-agent-98155"
+) => {
   // Create a new session
   const sessionClient = new dialogflow.SessionsClient();
   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
@@ -19,6 +37,9 @@ exports.makePost = async (input_text, projectId = "test-agent-98155") => {
         // The language used by the client (es)
         languageCode: "es"
       }
+    },
+    queryParams: {
+      context: createContext(projectId, context.split("/").pop())
     }
   };
 
@@ -37,7 +58,8 @@ exports.makePost = async (input_text, projectId = "test-agent-98155") => {
     console.log(`  Context: ${result.outputContexts[0].name}`);
     return {
       text: result.fulfillmentText,
-      context: result.outputContexts[0].name ? result.outputContexts[0].name : ""
+      context: result.outputContexts[0].name ?
+        result.outputContexts[0].name : "//"
     };
   }
   return {
