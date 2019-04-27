@@ -18,9 +18,9 @@ export class User {
 export class UserService {
   public currentUser = undefined;
   public botUser = new User(
-    "Diana",
+    "AI",
     "123456789",
-    "diana@bot.com",
+    "AI@bot.com",
     "/avatars/bot.jpg"
   );
 

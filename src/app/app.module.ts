@@ -12,6 +12,8 @@ import { SimpleChatComponent } from "./components/simple-chat/simple-chat.compon
 import { AuthService } from "./services/auth.service";
 import { UserService } from "./services/user.service";
 
+import { MzNavbarModule } from "ngx-materialize";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +21,13 @@ import { UserService } from "./services/user.service";
     AuthComponent,
     SimpleChatComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    MzNavbarModule
+  ],
   providers: [DialogflowService, AuthService, UserService],
   bootstrap: [AppComponent]
 })
