@@ -79,3 +79,26 @@ exports.login = function (req, res, next) {
     }
   })(req, res, next);
 }
+
+exports.register = function (req, res, next) {
+  const connection = mysql.createConnection(connection_data);
+  connection.connect();
+
+  if (req.body.email && req.body.password) {
+    bcrypt.genSalt(saltRounds, function (err, salt) {
+      bcrypt.hash(req.body.password, salt, function (err, hash) {
+        let new_user = squel.insert()
+          .into("users")
+          .set("username", req.body.username)
+          .set("usermail", req.body.email)
+          .set("password", hash)
+          .set("salt", salt)
+          .toString();
+
+        connection.query(new_user);
+      });
+    });
+  } else {
+    res.status(500);
+  }
+}

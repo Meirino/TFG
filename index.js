@@ -33,28 +33,7 @@ app.use(
 // Rutas y métodos (POST, GET, PUT, DELETE, etc...)
 app.post("/api/login", (req, res, next) => loginController.login(req, res, next));
 
-app.post("/api/register", function (req, res) {
-  const connection = mysql.createConnection(connection_data);
-  connection.connect();
-
-  if (req.body.email && req.body.password) {
-    bcrypt.genSalt(saltRounds, function (err, salt) {
-      bcrypt.hash(req.body.password, salt, function (err, hash) {
-        let new_user = squel.insert()
-          .into("users")
-          .set("username", req.body.username)
-          .set("usermail", req.body.email)
-          .set("password", hash)
-          .set("salt", salt)
-          .toString();
-
-        connection.query(new_user);
-      });
-    });
-  } else {
-    res.status(500);
-  }
-});
+app.post("/api/register", (req, res) => loginController.register(req, res));
 
 app.post("/api/chat", async (req, res) => {
   console.log(req.body);
