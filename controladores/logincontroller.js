@@ -9,6 +9,7 @@ const passport = require("passport");
 function buscarUsuario(email, callback) {
   const connection = mysql.createConnection(connection_data);
   const selectUser = squel.select()
+    .field("user_id", "id")
     .field("username")
     .field("usermail", "email")
     .field("password")
