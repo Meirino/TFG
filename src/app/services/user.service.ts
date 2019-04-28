@@ -4,25 +4,20 @@ export class User {
   username: string;
   password: string;
   email: string;
-  avatarURL: string;
+  id: string;
 
-  constructor(user: string, pass: string, email, avatarURL) {
+  constructor(user: string, pass: string, email, id) {
     (this.username = user),
       (this.password = pass),
       (this.email = email),
-      (this.avatarURL = avatarURL);
+      (this.id = id);
   }
 }
 
 @Injectable()
 export class UserService {
   public currentUser = undefined;
-  public botUser = new User(
-    "AI",
-    "123456789",
-    "AI@bot.com",
-    "/avatars/bot.jpg"
-  );
+  public botUser = new User("AI", "123456789", "AI@bot.com", "bot");
 
   constructor() {}
 }

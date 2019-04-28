@@ -12,7 +12,7 @@ export class AuthComponent implements OnInit {
     username: "",
     password: "",
     email: "",
-    avatarURL: ""
+    id: ""
   };
   public errorMessage: string;
   public loginInfo: LoginInfo = { email: "", password: "password" };

@@ -4,6 +4,10 @@
     <mz-navbar-item><a routerLink="/chat">Chat</a></mz-navbar-item>
   </mz-navbar-item-container>
   <mz-navbar-item-container [align]="'right'">
+    <img *ngIf=this.userService.currentUser class="circle responsive-img"
+      src="/avatars/{{this.userService.currentUser.id}}.jpg" style="height:60px;padding:5px;">
+  </mz-navbar-item-container>
+  <mz-navbar-item-container [align]="'right'">
     <a *ngIf=this.userService.currentUser id="userspace" class="">{{this.userService.currentUser.username}}</a>
   </mz-navbar-item-container>
 </mz-navbar>
