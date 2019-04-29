@@ -1,5 +1,3 @@
-<input (keyup.enter)="talk()" class="form-control form-control-lg" [(ngModel)]="mensaje" name="chat" type="text"
-  placeholder="Hola, ¿Qué tal?">
 <div id="text-chat">
   <div class="row" *ngFor="let texto of mensajes">
     <div class="col m1 s3 x6">
@@ -15,3 +13,5 @@
     </div>
   </div>
 </div>
+<input (keyup.enter)="talk()" class="form-control form-control-lg" [(ngModel)]="mensaje" name="chat" type="text"
+  placeholder="Hola, ¿Qué tal?">
