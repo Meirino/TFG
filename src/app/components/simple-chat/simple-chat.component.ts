@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { DialogflowService } from "src/app/services/dialogflow.service";
 import { Message } from "src/app/models/message";
 import { UserService } from "src/app/services/user.service";
@@ -21,13 +21,9 @@ export class SimpleChatComponent implements OnInit {
     this.mensajes.push(
       new Message(this.mensaje, false, this.userService.currentUser)
     );
-    this.dialog
-      .getResponse(this.mensaje)
-      .subscribe(response =>
-        this.mensajes.push(
-          new Message(response, true, this.userService.botUser)
-        )
-      );
+    this.dialog.getResponse(this.mensaje).subscribe(response => {
+      this.mensajes.push(new Message(response, true, this.userService.botUser));
+    });
   }
 
   ngOnInit() {}

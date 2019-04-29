@@ -1,5 +1,5 @@
 <div id="text-chat">
-  <div class="row" *ngFor="let texto of mensajes">
+  <div class="row" *ngFor="let texto of mensajes; let last = last">
     <div class="col m1 s3 x6">
       <!-- <img *ngIf="!texto.bot" class="img-fluid rounded-circle" src="http://localhost:4000/{{texto.user.avatarURL}}"> -->
       <small class="username" *ngIf="!texto.bot">{{texto.user.username}}</small>
@@ -7,11 +7,19 @@
     <div class="col m10 s6 x10">
       <p [ngClass]="{'speech-bubble-bot': texto.bot, 'speech-bubble': !texto.bot}">{{texto.content}}</p>
     </div>
-    <div class="col-md-1 col-sm-6 col-xs-2">
+    <div class="col m1 s6 x2">
       <!-- <img *ngIf="texto.bot" class="img-fluid rounded-circle" src="http://localhost:4000/{{texto.user.avatarURL}}"> -->
       <small class="username" *ngIf="texto.bot">{{texto.user.username}}</small>
     </div>
   </div>
 </div>
-<input (keyup.enter)="talk()" class="form-control form-control-lg" [(ngModel)]="mensaje" name="chat" type="text"
-  placeholder="Hola, ¿Qué tal?">
+<div class="row">
+  <div class="col m1 s1 x0">
+  </div>
+  <div class="col m10 s10 x12">
+    <input (keyup.enter)="talk()" class="form-control" [(ngModel)]="mensaje" name="chat" type="text"
+      placeholder="Hola, ¿Qué tal?">
+  </div>
+  <div class="col m1 s1 x0">
+  </div>
+</div>

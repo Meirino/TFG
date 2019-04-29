@@ -13,6 +13,7 @@ import { AuthService } from "./services/auth.service";
 import { UserService } from "./services/user.service";
 
 import { MzNavbarModule } from "ngx-materialize";
+import { MzTabModule } from "ngx-materialize";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MzNavbarModule } from "ngx-materialize";
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    MzNavbarModule
+    MzNavbarModule,
+    MzTabModule
   ],
   providers: [DialogflowService, AuthService, UserService],
   bootstrap: [AppComponent]
