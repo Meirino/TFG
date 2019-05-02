@@ -14,13 +14,15 @@ import { UserService } from "./services/user.service";
 
 import { MzNavbarModule } from "ngx-materialize";
 import { MzTabModule } from "ngx-materialize";
+import { MessageComponentComponent } from './components/simple-chat/message-component/message-component.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     AuthComponent,
-    SimpleChatComponent
+    SimpleChatComponent,
+    MessageComponentComponent
   ],
   imports: [
     BrowserModule,
