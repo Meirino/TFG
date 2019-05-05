@@ -1,9 +1,14 @@
 input {
-  position: fixed;
-  bottom: 0px;
-  padding: 15px;
+    position: fixed;
+    bottom: 0px;
+    padding: 15px;
 }
 
-.chat_body {
-  background-image: url("https://raw.githubusercontent.com/telegramdesktop/tdesktop/dev/Telegram/Resources/art/bg_initial.jpg");
+#text-chat {
+    overflow-anchor: none;
+}
+
+#anchor {
+    overflow-anchor: auto;
+    height: 1px;
 }

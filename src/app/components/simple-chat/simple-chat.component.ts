@@ -24,6 +24,7 @@ export class SimpleChatComponent implements OnInit {
     this.dialog.getResponse(this.mensaje).subscribe(response => {
       this.mensajes.push(new Message(response, true, this.userService.botUser));
     });
+    this.mensaje = "";
   }
 
   ngOnInit() {}
