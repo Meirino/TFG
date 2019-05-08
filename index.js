@@ -1,17 +1,17 @@
 "use strict";
 
-// Librerias
+// Importar librerias
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 const passport = require("passport");
 
-// Controladores
+// Importar controladores
 const loginController = require('./controladores/logincontroller');
 const chatController = require('./controladores/chatcontroller');
 
-// Puerto a usar
+// Inicializar el puerto a usar para escuchar peticiones para la API
 const port = 4000;
 
 passport.use(loginController.passportLocalStrategy);
@@ -30,7 +30,7 @@ app.use(
   bodyParser.json()
 );
 
-// Rutas y métodos (POST, GET, PUT, DELETE, etc...)
+// Definir las rutas y métodos de la API
 app.post("/api/login", (req, res, next) => loginController.login(req, res, next));
 
 app.post("/api/register", (req, res) => loginController.register(req, res));
