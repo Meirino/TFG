@@ -62,8 +62,10 @@ exports.makePost = async (
         result.outputContexts[0].name : "//"
     };
   }
-  return {
-    text: result.fulfillmentText,
-    context: "DefaultContext"
-  };
+  marked(result.fulfillmentText, (err, result) => {
+    return {
+      text: result,
+      context: "DefaultContext"
+    };
+  })
 };
