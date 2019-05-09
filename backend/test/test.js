@@ -9,7 +9,7 @@ describe('API Controller', function () {
         it('Should return a "hello world" string', () => {
             assert.equal(() => {
                 return "Hello World"
-            }, "Hello world");
+            }, "Hello World");
         });
     });
 });
