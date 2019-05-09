@@ -30,6 +30,7 @@ pipeline  {
         stage('Realizar testing') {
             steps {
                 dir('backend') {
+                    bat "npm install"
                     bat "npm test"
                 }
             }
