@@ -35,5 +35,13 @@ pipeline  {
                 }
             }
         }
+        stage('Compilar Angular') {
+            steps {
+                dir('frontend') {
+                    bat "npm install"
+                    bat "ng build --prod --aot"
+                }
+            }
+        }
     }
 }
