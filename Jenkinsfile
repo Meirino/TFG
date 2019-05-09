@@ -5,7 +5,8 @@ env.git_url = 'https://github.com/Meirino/TFG.git'
 env.git_branch = 'master'
 
 // Jenkins settings
-env.jenkins_custom_workspace = "D:/Jenkins/TFG"
+// env.jenkins_custom_workspace = "D:/Jenkins/TFG"
+env.jenkins_custom_workspace = "C:/Users/Javi/Documents/Jenkins/TFG"
 env.AWS_CredentialsId = ""
 env.Github_CredentialsId = "GithubCredentials"
 
