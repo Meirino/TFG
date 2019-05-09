@@ -26,5 +26,12 @@ pipeline  {
                 git credentialsId: "$Github_CredentialsId", url: "$git_url"
             }
         }
+        stage('Realizar testing') {
+            steps {
+                dir('backend') {
+                    sh "npm test"
+                }
+            }
+        }
     }
 }
