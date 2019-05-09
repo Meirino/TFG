@@ -30,7 +30,7 @@ pipeline  {
         stage('Realizar testing') {
             steps {
                 dir('backend') {
-                    sh "npm test"
+                    bat "npm test"
                 }
             }
         }
