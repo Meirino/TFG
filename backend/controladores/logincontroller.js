@@ -146,3 +146,7 @@ exports.register = function (req, res, next) {
     res.status(500);
   }
 }
+
+exports.hello_world = () => {
+  return "hello world"
+}
