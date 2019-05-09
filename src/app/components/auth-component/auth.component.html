@@ -1,0 +1,63 @@
+<div class="container-fluid">
+  <div class="row">
+    <mz-tab [fixedTabWidth]="'true'" (onShow)="callbackFunction()" [responsiveThreshold]="'true'" [swipeable]="'true'">
+      <mz-tab-item [active]="'true'" [label]="'Login'">
+        <div class="col m4 s0 x0"></div>
+        <div class="col m4 s12 x12">
+          <div class="card" id="login">
+            <div class="card-body">
+              {{errorMessage}}
+              <h4 class="card-title">Login</h4>
+              <form (ngSubmit)="login()">
+                <div class="input-field">
+                  <label for="exampleInputEmail2">Correo Electrónico</label>
+                  <br />
+                  <input [(ngModel)]="this.loginInfo.email" type="email" class="form-control" id="exampleInputEmail2"
+                    aria-describedby="emailHelp" placeholder="Introduzca su correo" name="username" />
+                </div>
+                <div class="input-field">
+                  <label for="exampleInputPassword1">Contraseña</label>
+                  <br />
+                  <input [(ngModel)]="this.loginInfo.password" type="password" class="form-control"
+                    id="exampleInputPassword1" placeholder="Password" name="password" />
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col m4 s0 x0"></div>
+      </mz-tab-item>
+      <mz-tab-item [label]="'Registro'">
+        <div class="col m6 s12 x12">
+          <div class="card" id="registro">
+            <div class="card-body">
+              <h4 class="card-title">Registro</h4>
+              <form (ngSubmit)="register()">
+                <div class="input-field">
+                  <label for="exampleInputEmail3">Nombre de usuario</label>
+                  <br />
+                  <input type="email" [(ngModel)]="this.newUserRegister.username" class="form-control"
+                    id="exampleInputEmail3" aria-describedby="emailHelp" placeholder="Enter username" name="username" />
+                </div>
+                <div class="input-field">
+                  <label for="exampleInputEmail1">Correo electrónico</label>
+                  <br />
+                  <input type="email" [(ngModel)]="this.newUserRegister.email" class="form-control"
+                    id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email" />
+                </div>
+                <div class="input-field">
+                  <label for="exampleInputPassword1">Contraseña</label>
+                  <br />
+                  <input type="password" [(ngModel)]="this.newUserRegister.password" class="form-control"
+                    id="exampleInputPassword1" placeholder="Password" name="password" />
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </mz-tab-item>
+    </mz-tab>
+  </div>
+</div>
