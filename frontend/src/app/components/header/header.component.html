@@ -1,7 +1,7 @@
 <mz-navbar>
   <mz-navbar-item-container [align]="'left'">
     <mz-navbar-item><a routerLink="/">Inicio</a></mz-navbar-item>
-    <mz-navbar-item><a routerLink="/chat">Chat</a></mz-navbar-item>
+    <mz-navbar-item *ngIf=this.userService.currentUser><a routerLink="/chat">Chat</a></mz-navbar-item>
   </mz-navbar-item-container>
   <mz-navbar-item-container [align]="'right'">
     <img *ngIf=this.userService.currentUser class="circle responsive-img"
