@@ -33,6 +33,8 @@ app.use(
 // Definir las rutas y métodos de la API
 app.post("/api/login", (req, res, next) => loginController.login(req, res, next));
 
+app.post("/api/refreshLogin", (req, res) => loginController.refreshLogin(req, res));
+
 app.post("/api/register", (req, res) => loginController.register(req, res));
 
 app.post("/api/chat", async (req, res) => {

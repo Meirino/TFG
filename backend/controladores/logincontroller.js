@@ -1,11 +1,15 @@
+// Importar modulos de MySQL
 const squel = require("squel");
 const mysql = require("mysql");
 const connection_data = require('../mysql').connection_data;
+
+// Importar modulos relaciones con la autenticación de usuarios
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const LocalStrategy = require("passport-local").Strategy;
 const passport = require("passport");
 
+// Importar gnerador de IDs
 const uuid = require("uuid");
 
 function buscarUsuario(email, callback) {
@@ -79,7 +83,6 @@ exports.passportLocalStrategy = new LocalStrategy({
                 user = {
                   username: user.username,
                   email: user.email,
-                  password: user.password,
                   id: user.id,
                   sessionToken: token
                 }
@@ -147,6 +150,43 @@ exports.register = function (req, res, next) {
   }
 }
 
-exports.hello_world = () => {
-  return "hello world"
+exports.refreshLogin = (req, res) => {
+  const connection = mysql.createConnection(connection_data);
+  connection.connect();
+
+  const id = 1;
+  const token = "dded9e4a-d07b-487c-bd01-0204fda6fd49";
+
+  console.log(`id: ${id}, token: ${token}`);
+
+  const query = squel.select()
+    .field("u.user_id", "id")
+    .field("u.username")
+    .field("u.usermail", "email")
+    .from("users", "u")
+    .join("user_info", "ui")
+    .where(`u.user_id = ${id} AND ui.session_token = ?`, token)
+    .toString();
+
+  connection.query(query, (err, result) => {
+    const resultado = result[0];
+    user = {
+      username: resultado.username,
+      email: resultado.email,
+      id: resultado.id,
+      sessionToken: token
+    }
+    res.status(200).send(user);
+  });
+}
+
+exports.cerrarSesion = (id, token) => {
+  const connection = mysql.createConnection(connection_data);
+  connection.connect();
+
+  // NO TE OLVIDES DE PONER EL WHERE EN EL DELETE FROM
+  const query = squel.delete()
+    .from("user_info", "ui")
+    .where(`ui.user_id = ${id} AND ui.session_token = ${token}`)
+    .toString();
 }
