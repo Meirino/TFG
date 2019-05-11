@@ -73,7 +73,7 @@ export class AuthService {
   /* Comprueba si existe un token de sesión almacenado en el navegador
   Si existe, manda una petición al servidor para que recoger los datos del usuario  */
   public loginRefresh(): Observable<User> {
-    if (localStorage.length === 2) {
+    if (localStorage.getItem("user_id") && localStorage.getItem("user_token")) {
       console.log(`ID del usuario: ${localStorage.getItem("user_id")}`);
       console.log(`Token del usuario: ${localStorage.getItem("user_token")}`);
       try {

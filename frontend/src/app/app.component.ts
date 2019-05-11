@@ -13,9 +13,10 @@ export class AppComponent implements OnInit {
   constructor(public auth: AuthService, public user: UserService) {}
 
   ngOnInit() {
-    this.auth.loginRefresh().subscribe(res => {
-      this.user.currentUser = res;
-      console.log(res);
-    });
+    try {
+      this.auth.loginRefresh().subscribe(res => {
+        this.user.currentUser = res;
+      });
+    } catch (error) {}
   }
 }

@@ -154,8 +154,8 @@ exports.refreshLogin = (req, res) => {
   const connection = mysql.createConnection(connection_data);
   connection.connect();
 
-  const id = 1;
-  const token = "dded9e4a-d07b-487c-bd01-0204fda6fd49";
+  const id = req.body.user_id;
+  const token = req.body.user_token;
 
   console.log(`id: ${id}, token: ${token}`);
 
@@ -169,14 +169,16 @@ exports.refreshLogin = (req, res) => {
     .toString();
 
   connection.query(query, (err, result) => {
-    const resultado = result[0];
-    user = {
-      username: resultado.username,
-      email: resultado.email,
-      id: resultado.id,
-      sessionToken: token
+    if (result.length > 0) {
+      const resultado = result[0];
+      user = {
+        username: resultado.username,
+        email: resultado.email,
+        id: resultado.id,
+        sessionToken: token
+      }
+      res.status(200).send(user);
     }
-    res.status(200).send(user);
   });
 }
 
