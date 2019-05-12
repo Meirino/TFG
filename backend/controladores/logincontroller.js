@@ -182,13 +182,26 @@ exports.refreshLogin = (req, res) => {
   });
 }
 
-exports.cerrarSesion = (id, token) => {
+exports.cerrarSesion = (req, res) => {
   const connection = mysql.createConnection(connection_data);
   connection.connect();
 
+  const id = req.body.user_id;
+  const token = req.body.user_token;
+
+  console.log(`id: ${id}, token: ${token}`);
+
   // NO TE OLVIDES DE PONER EL WHERE EN EL DELETE FROM
   const query = squel.delete()
-    .from("user_info", "ui")
-    .where(`ui.user_id = ${id} AND ui.session_token = ${token}`)
+    .from("user_info")
+    .where(`user_id = ${id}`)
     .toString();
+
+  connection.query(query, (err, result) => {
+    console.log(err)
+    if (err) res.status(500).send("Se ha producido un error");
+    else res.status(202).send({
+      status: true
+    });
+  });
 }

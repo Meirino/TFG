@@ -28,6 +28,10 @@ export interface loginRefreshRes {
   id: string;
 }
 
+export interface SignoutRes {
+  status: boolean;
+}
+
 // Interfaz para recoger errores
 export interface errorRes {
   info: string;
@@ -91,6 +95,30 @@ export class AuthService {
         /* En caso de error, lo mejor es hacer una petición para que el servidor borre los token de sesión
         y borrar el localStorage */
         console.log("Ha ocurrido un error");
+      }
+    }
+  }
+
+  public cerrarSesion(): Observable<boolean> {
+    const id = localStorage.getItem("user_id");
+    const token = localStorage.getItem("user_token");
+    if (id && token) {
+      try {
+        return this.http
+          .post<SignoutRes>(this.baseURL + "signout", {
+            user_id: id,
+            user_token: token
+          })
+          .pipe(
+            map(res => {
+              localStorage.removeItem("user_id");
+              localStorage.removeItem("user_token");
+
+              return res.status;
+            })
+          );
+      } catch (error) {
+        this.logInErrorSubject.next("Algo ha salido mal");
       }
     }
   }
