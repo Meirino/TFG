@@ -39,7 +39,7 @@ pipeline  {
             steps {
                 dir('frontend') {
                     bat "npm install"
-                    bat "ng build --prod --aot"
+                    bat "npm run ng -- build --prod --aot"
                 }
             }
         }
