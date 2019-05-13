@@ -206,6 +206,6 @@ exports.cerrarSesion = (req, res) => {
   });
 }
 
-exports.hello_world() {
+exports.hello_world() = () => {
   return "hello world"
 }
