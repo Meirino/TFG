@@ -43,7 +43,7 @@ pipeline  {
                 }
                 dir('backend') {
                     bat "mkdir public"
-                    bat "move D:/Jenkins/TFG/dist/TFG-Angular/*.* D:/Jenkins/TFG/backend/public"
+                    bat "move D:/Jenkins/TFG/dist/TFG-Angular/*.* public"
                 }
             }
         }
