@@ -1,3 +1,9 @@
+<div class="navbar-fixed">
+  <mz-navbar id="AIbar">
+    <a class="brand-logo"><img class="circle responsive-img" src="/avatars/bot.jpg" style="height:60px;padding:5px;">
+      {{this.userService.botUser.username}}</a>
+  </mz-navbar>
+</div>
 <div id="text-chat" class="chat_body">
   <div id="message_row" class="messages">
     <div class="row" *ngFor="let texto of mensajes; let last = last">

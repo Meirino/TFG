@@ -1,16 +1,18 @@
-<mz-navbar>
-  <mz-navbar-item-container [align]="'left'">
-    <mz-navbar-item><a routerLink="/">Inicio</a></mz-navbar-item>
-    <mz-navbar-item *ngIf=this.userService.currentUser><a routerLink="/chat">Chat</a></mz-navbar-item>
-  </mz-navbar-item-container>
-  <mz-navbar-item-container *ngIf=this.userService.currentUser [align]="'right'">
-    <a (click)="cerrarSesion()" id="apagado" class="">Cerrar sesión</a>
-  </mz-navbar-item-container>
-  <mz-navbar-item-container *ngIf=this.userService.currentUser [align]="'right'">
-    <img class="circle responsive-img" src="/avatars/0{{this.userService.currentUser.id}}.jpg"
-      style="height:60px;padding:5px;">
-  </mz-navbar-item-container>
-  <mz-navbar-item-container *ngIf=this.userService.currentUser [align]="'right'">
-    <a id="userspace" class="">{{this.userService.currentUser.username}}</a>
-  </mz-navbar-item-container>
-</mz-navbar>
+<div class="navbar-fixed">
+  <mz-navbar id="header">
+    <mz-navbar-item-container [align]="'left'">
+      <mz-navbar-item><a routerLink="/">Inicio</a></mz-navbar-item>
+      <mz-navbar-item *ngIf=this.userService.currentUser><a routerLink="/chat">Chat</a></mz-navbar-item>
+    </mz-navbar-item-container>
+    <mz-navbar-item-container *ngIf=this.userService.currentUser [align]="'right'">
+      <a (click)="cerrarSesion()" id="apagado" class="">Cerrar sesión</a>
+    </mz-navbar-item-container>
+    <mz-navbar-item-container *ngIf=this.userService.currentUser [align]="'right'">
+      <img class="circle responsive-img" src="/avatars/0{{this.userService.currentUser.id}}.jpg"
+        style="height:60px;padding:5px;">
+    </mz-navbar-item-container>
+    <mz-navbar-item-container *ngIf=this.userService.currentUser [align]="'right'">
+      <a id="userspace" class="">{{this.userService.currentUser.username}}</a>
+    </mz-navbar-item-container>
+  </mz-navbar>
+</div>
