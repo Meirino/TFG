@@ -36,7 +36,9 @@
             "sudo apt-get update",
             "sudo apt-get -y install ansible",
             "sudo mkdir /home/ubuntu/node-app",
-            "chown ubuntu:ubuntu /home/ubuntu/node-app"
+            "sudo mkdir /home/ubuntu/sql_files",
+            "chown ubuntu:ubuntu /home/ubuntu/node-app",
+            "chown ubuntu:ubuntu /home/ubuntu/sql_files"
         ]
     }, {
         "type": "file",
@@ -44,8 +46,8 @@
         "destination": "/home/ubuntu/node-app/"
     }, {
         "type": "file",
-        "source": "D:/Jenkins/TFG/database/",
-        "destination": "/home/ubuntu/sql_files/"
+        "source": "D:/Jenkins/TFG/database/tfg.sql",
+        "destination": "/home/ubuntu/sql_files/tfg.sql"
     }, {
         "type": "ansible-local",
         "playbook_file": "D:/Jenkins/TFG/packer/mysql-playbook.yml"
