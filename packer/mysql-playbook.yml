@@ -1,24 +1,38 @@
----
-- hosts: all
+- hosts: webservers
+  user: ubuntu
+  sudo: true
   vars:
-    mysql_root_password: password
+    - root_password: root
+
   tasks:
     - name: Install MySQL
-      apt: name={{ item }} update_cache=yes cache_valid_time=3600 state=present
-      sudo: yes
+      action: apt pkg=$item state=installed
       with_items:
+        - mysql-server-core-5.5
+        - mysql-client-core-5.5
+        - libmysqlclient-dev
         - python-mysqldb
         - mysql-server
+        - mysql-client
+
     - name: Start the MySQL service
+      action: service name=mysql state=started
+
+    - name: Update mysql password for root account
+      mysql_user: name=root host={{ item }}
+        password={{root_password}}
+        login_user=root
+        login_password="root"
       sudo: yes
-      service:
-        name: mysql
-        state: started
-        enabled: true
+      sudo_user: root
+
+    - name: Remove the test database
+      mysql_db: name=test state=absent
+
     - name: Import file.sql
       mysql_db:
         login_user: root
-        login_password: password
+        login_password: root
         state: import
         name: all
         target: /home/ubuntu/sql_files/tfg.sql
