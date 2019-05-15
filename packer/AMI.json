@@ -43,7 +43,14 @@
         "source": "D:/Jenkins/TFG/backend/",
         "destination": "/home/ubuntu/node-app/"
     }, {
+        "type": "file",
+        "source": "D:/Jenkins/TFG/database/",
+        "destination": "/home/ubuntu/sql_files/"
+    }, {
         "type": "ansible-local",
-        "playbook_file": "D:/Jenkins/TFG/packer/ansible-playbook.yml"
+        "playbook_file": "D:/Jenkins/TFG/packer/mysql-playbook.yml"
+    }, {
+        "type": "ansible-local",
+        "playbook_file": "D:/Jenkins/TFG/packer/node-playbook.yml"
     }]
 }
