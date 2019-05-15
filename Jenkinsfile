@@ -14,7 +14,7 @@ pipeline {
     }
     stage('Realizar testing') {
       steps {
-        dir(path: 'backend') {
+        dir('backend') {
           bat 'npm install'
           bat 'npm test'
         }
@@ -23,16 +23,10 @@ pipeline {
     }
     stage('Compilar Angular') {
       steps {
-        dir(path: 'frontend') {
+        dir('frontend') {
           bat 'npm install'
           bat 'npm run ng -- build --prod --aot'
         }
-
-        dir(path: 'backend') {
-          bat 'mkdir public'
-          bat 'move D:/Jenkins/TFG/dist/TFG-Angular/*.* public'
-        }
-
       }
     }
     stage('Post') {
