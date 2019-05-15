@@ -17,6 +17,8 @@
         enabled: true
     - name: Import file.sql
       mysql_db:
+        login_user: root
+        login_password: password
         state: import
         name: all
         target: /home/ubuntu/sql_files/tfg.sql
