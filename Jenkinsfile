@@ -1,3 +1,18 @@
+import groovy.json.JsonOutput
+
+// Git settings
+env.git_url = 'https://github.com/Meirino/TFG.git'
+env.git_branch = 'master'
+
+// Jenkins settings
+// env.jenkins_custom_workspace = "D:/Jenkins/TFG"
+env.jenkins_custom_workspace = "D:/Jenkins/TFG"
+env.AWS_CredentialsId = ""
+env.Github_CredentialsId = "GithubCredentials"
+
+// AWS Region
+env.region = "us-east-1"
+
 pipeline {
   agent {
     node {
