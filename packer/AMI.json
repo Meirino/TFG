@@ -1,0 +1,49 @@
+{
+    "variables": {
+        "aws_access_key": "",
+        "aws_secret_key": "",
+        "region": ""
+    },
+    "builders": [{
+        "name": "Ubuntu Build",
+        "type": "amazon-ebs",
+        "access_key": "{{user `aws_access_key`}}",
+        "secret_key": "{{user `aws_secret_key`}}",
+        "region": "us-east-1",
+        "source_ami": "ami-0a313d6098716f372",
+        "instance_type": "t2.micro",
+        "ssh_username": "ubuntu",
+        "ami_name": "app-docker-{{timestamp}}",
+        "run_tags": {
+            "Name": "jenkins-packer-runner",
+            "OS_Version": "Ubuntu",
+            "Release": "Latest",
+            "Runner": "Packer"
+        },
+        "tags": {
+            "Name": "app-docker-{{timestamp}}",
+            "OS_Version": "Ubuntu",
+            "Release": "Latest",
+            "Runner": "EC2"
+        }
+    }],
+    "provisioners": [{
+        "type": "shell",
+        "execute_command": "echo 'ubuntu' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+        "inline": [
+            "sleep 10",
+            "sudo apt-add-repository ppa:ansible/ansible -y",
+            "sudo apt-get update",
+            "sudo apt-get -y install ansible",
+            "sudo mkdir /home/ubuntu/node-app",
+            "chown ubuntu:ubuntu /home/ubuntu/node-app"
+        ]
+    }, {
+        "type": "file",
+        "source": "{{pwd}}/backend/",
+        "destination": "/home/ubuntu/node-app/"
+    }, {
+        "type": "ansible-local",
+        "playbook_file": "{{pwd}}/packer/ansible-playbook.yml"
+    }]
+}
