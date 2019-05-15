@@ -16,4 +16,4 @@
         state: started
         enabled: true
     - name: Import TFG_DB
-      shell: mysql db_name < /home/ubuntu/sql_files/tfg.sql
+      shell: mysql -u root -ppassword db_name < /home/ubuntu/sql_files/tfg.sql
