@@ -47,6 +47,13 @@ pipeline {
         }
       }
     }
+    stage('Crear copia de MySQL') {
+      steps {
+        dir(path: 'C:/Program Files/MySQL/MySQL Server 8.0/bin') {
+          bat 'mysqldump.exe -u root -ppassword tfg_db > tfg.sql'
+        }
+      }
+    }
     stage('Post') {
       steps {
         cleanWs(cleanWhenFailure: true, cleanWhenSuccess: true, deleteDirs: true)
