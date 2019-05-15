@@ -1,8 +1,6 @@
 - hosts: all
   user: ubuntu
   sudo: true
-  vars:
-    - root_password: root
 
   tasks:
     - name: Install MySQL
@@ -16,11 +14,11 @@
     - name: Start the MySQL service
       action: service name=mysql state=started
 
-    - name: update mysql root password for all root accounts
+    - name: Update mysql root password for all root accounts
       mysql_user:
         name: root
         host: "{{ item }}"
-        password: "{{ mysql_root_password }}"
+        password: "password"
         priv: "*.*:ALL,GRANT"
       with_items:
         - 127.0.0.1
