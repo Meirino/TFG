@@ -9,9 +9,6 @@
       apt:
         name: "{{ item }}"
       with_items:
-        - mysql-server-core-5.5
-        - mysql-client-core-5.5
-        - libmysqlclient-dev
         - python-mysqldb
         - mysql-server
         - mysql-client
