@@ -21,6 +21,10 @@
         name: nodejs
         state: present
 
+    - name: Install packages based on package.json.
+      npm:
+        path: /home/ubuntu/node-app
+
     - name: Install PM2
       become: true
       command: npm install -g pm2

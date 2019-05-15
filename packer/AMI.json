@@ -49,6 +49,14 @@
         "source": "D:/Jenkins/TFG/database/tfg.sql",
         "destination": "/home/ubuntu/sql_files/tfg.sql"
     }, {
+        "type": "shell",
+        "inline": [
+            "cd /home/ubuntu/",
+            "sudo chmod -R 755 node-app",
+            "cd /home/ubuntu/node-app",
+            "npm install"
+        ]
+    }, {
         "type": "ansible-local",
         "playbook_file": "D:/Jenkins/TFG/packer/mysql-playbook.yml"
     }, {

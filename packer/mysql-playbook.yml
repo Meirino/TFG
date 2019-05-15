@@ -22,7 +22,7 @@
       mysql_user: name=root host={{ item }}
         password={{root_password}}
         login_user=root
-        login_password="root"
+        login_password="password"
       sudo: yes
       sudo_user: root
 
