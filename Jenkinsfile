@@ -54,11 +54,11 @@ pipeline {
         }
       }
     }
-    stage('Crear imagen de aplicación') {
+    stage('Crear imagen de aplicacion') {
       steps {
         dir('packer') {
           withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'jjmeirino', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-            tool name: 'packer_windows -var "aws_access_key=$AWS_ACCESS_KEY_ID" -var "aws_secret_key=$AWS_SECRET_ACCESS_KEY" build AMI.json', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
+            packer(name: 'packer_windows', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation') -var "aws_access_key=$AWS_ACCESS_KEY_ID" -var "aws_secret_key=$AWS_SECRET_ACCESS_KEY" build AMI.json
           }
         }
       }
