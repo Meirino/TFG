@@ -41,7 +41,7 @@ pipeline {
         dir('frontend') {
           bat 'npm install'
           bat 'npm run ng -- build --prod --aot --build-optimizer'
-          bat 'move ./dist/TFG-Angular/* ../backend/public/'
+          bat 'move dist/TFG-Angular/* D:/Jenkins/TFG/backend/public/'
         }
       }
     }
