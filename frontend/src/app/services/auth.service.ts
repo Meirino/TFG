@@ -39,7 +39,7 @@ export interface errorRes {
 
 @Injectable()
 export class AuthService {
-  public baseURL: string = "http://192.168.1.44:4000/api/";
+  public baseURL: string = "http://0.0.0.0:4000/api/";
   public Register: User;
   private logInErrorSubject = new Subject<string>();
 
