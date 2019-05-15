@@ -21,9 +21,6 @@ pipeline {
     }
 
   }
-  environment {
-    PACKER_HOME = tool name: 'packer_windows', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
-  }
   stages {
     stage('Clonar repositorio de Github') {
       steps {

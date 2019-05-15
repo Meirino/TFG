@@ -40,10 +40,10 @@
         ]
     }, {
         "type": "file",
-        "source": "{{pwd}}/backend/",
+        "source": "D:/Jenkins/TFG/backend/",
         "destination": "/home/ubuntu/node-app/"
     }, {
         "type": "ansible-local",
-        "playbook_file": "{{pwd}}/packer/ansible-playbook.yml"
+        "playbook_file": "D:/Jenkins/TFG/packer/ansible-playbook.yml"
     }]
 }
