@@ -59,9 +59,9 @@ pipeline {
     }
     stage('Crear imagen de aplicacion') {
       steps {
-        dir('packer') {
+        dir(path: 'C:/Program Files (x86)/Jenkins/tools/biz.neustar.jenkins.plugins.packer.PackerInstallation/packer_windows') {
           withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'jjmeirino', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-            bat "C:/'Program Files (x86)'/Jenkins/tools/biz.neustar.jenkins.plugins.packer.PackerInstallation/packer_windows/packer.exe -var 'aws_access_key=$AWS_ACCESS_KEY_ID' -var 'aws_secret_key=$AWS_SECRET_ACCESS_KEY' build D:/Jenkins/TFG/AMI.json"
+            bat "packer.exe -var 'aws_access_key=$AWS_ACCESS_KEY_ID' -var 'aws_secret_key=$AWS_SECRET_ACCESS_KEY' build D:/Jenkins/TFG/AMI.json"
           }
         }
       }
