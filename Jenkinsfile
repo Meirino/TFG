@@ -50,7 +50,7 @@ pipeline {
     stage('Crear copia de MySQL') {
       steps {
         dir(path: 'C:/Program Files/MySQL/MySQL Server 8.0/bin') {
-          bat 'mysqldump.exe -u root -ppassword tfg_db > tfg.sql'
+          bat 'mysqldump.exe -u root -ppassword tfg_db > D:/Jenkins/TFG/database/tfg.sql'
         }
       }
     }
