@@ -25,12 +25,6 @@
       become: true
       command: npm install -g pm2
 
-    - name: Install mysql
-      become: true
-      apt:
-        name: mysql
-        state: present
-
     - name: Create PM2 service
       become: true
       command: env PATH=$PATH:/usr/bin pm2 startup upstart -u ubuntu --hp /home/ubuntu
