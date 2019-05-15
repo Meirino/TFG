@@ -15,5 +15,8 @@
         name: mysql
         state: started
         enabled: true
-    - name: Import TFG_DB
-      shell: mysql -u root -ppassword db_name < /home/ubuntu/sql_files/tfg.sql
+    - name: Import file.sql
+      mysql_db:
+        state: import
+        name: all
+        target: /home/ubuntu/sql_files/tfg.sql
