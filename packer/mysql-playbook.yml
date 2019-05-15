@@ -1,4 +1,4 @@
-- hosts: webservers
+- hosts: all
   user: ubuntu
   sudo: true
   vars:
