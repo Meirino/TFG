@@ -52,9 +52,7 @@
         "type": "shell",
         "inline": [
             "cd /home/ubuntu/",
-            "sudo chmod -R 755 node-app",
-            "cd /home/ubuntu/node-app",
-            "npm install"
+            "sudo chmod -R 755 node-app"
         ]
     }, {
         "type": "ansible-local",
