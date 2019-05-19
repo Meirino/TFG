@@ -4,6 +4,7 @@ import { map } from "rxjs/operators";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { User } from "./user.service";
 import { Subject } from "rxjs";
+import { Router } from "@angular/router";
 
 // Interfaz para recoger los datos de login
 export interface LoginInfo {
@@ -39,11 +40,11 @@ export interface errorRes {
 
 @Injectable()
 export class AuthService {
-  public baseURL: string = "http://0.0.0.0:4000/api/";
+  public baseURL: string = "http://192.168.1.42:4000/api/";
   public Register: User;
   private logInErrorSubject = new Subject<string>();
 
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient, public router: Router) {}
 
   public getLoginErrors(): Subject<string> {
     return this.logInErrorSubject;
@@ -113,6 +114,7 @@ export class AuthService {
             map(res => {
               localStorage.removeItem("user_id");
               localStorage.removeItem("user_token");
+              this.router.navigateByUrl("/");
 
               return res.status;
             })
