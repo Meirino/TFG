@@ -27,5 +27,9 @@ export class SimpleChatComponent implements OnInit {
     this.mensaje = "";
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.dialog.getResponse("ayuda").subscribe(response => {
+      this.mensajes.push(new Message(response, true, this.userService.botUser));
+    });
+  }
 }
