@@ -2,8 +2,7 @@
   <div class="row">
     <mz-tab [fixedTabWidth]="'true'" [responsiveThreshold]="'true'" [swipeable]="'true'">
       <mz-tab-item [active]="'true'" [label]="'Login'">
-        <div class="col m4 s0 x0"></div>
-        <div class="col m4 s12 x12">
+        <div class="col m5 s12 x12">
           <div class="card" id="login">
             <div class="card-body">
               {{errorMessage}}
@@ -26,7 +25,15 @@
             </div>
           </div>
         </div>
-        <div class="col m4 s0 x0"></div>
+        <div class="col m7 s12 x12">
+          <mz-card [hoverable]="yes">
+            <mz-card-title>Ayuda</mz-card-title>
+            <mz-card-content>
+              <p>Una vez estés registrado, podrás iniciar sesión con el correo que hayas usado para registrarte y la
+                contraseña que hayas elegido.</p>
+            </mz-card-content>
+          </mz-card>
+        </div>
       </mz-tab-item>
       <mz-tab-item [label]="'Registro'">
         <div class="col m6 s12 x12">
@@ -56,6 +63,16 @@
               </form>
             </div>
           </div>
+        </div>
+        <div class="col m6 s12 x12">
+          <mz-card [hoverable]="yes">
+            <mz-card-title>Ayuda</mz-card-title>
+            <mz-card-content>
+              <p>Una vez estés registrado, podrás iniciar sesión con el correo que hayas usado para registrarte y la
+                contraseña que hayas elegido.</p>
+              <p>Para registrarte, usa tu correo electrónico y un nombre de usuario que quieras usar.</p>
+            </mz-card-content>
+          </mz-card>
         </div>
       </mz-tab-item>
     </mz-tab>

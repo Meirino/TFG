@@ -12,9 +12,10 @@ import { SimpleChatComponent } from "./components/simple-chat/simple-chat.compon
 import { AuthService } from "./services/auth.service";
 import { UserService } from "./services/user.service";
 
-import { MzNavbarModule } from "ngx-materialize";
+import { MzNavbarModule, MzCardModule } from "ngx-materialize";
 import { MzTabModule } from "ngx-materialize";
-import { MessageComponentComponent } from './components/simple-chat/message-component/message-component.component';
+import { MessageComponentComponent } from "./components/simple-chat/message-component/message-component.component";
+import { PerfilComponent } from "./components/perfil/perfil.component";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MessageComponentComponent } from './components/simple-chat/message-comp
     NavbarComponent,
     AuthComponent,
     SimpleChatComponent,
-    MessageComponentComponent
+    MessageComponentComponent,
+    PerfilComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,8 @@ import { MessageComponentComponent } from './components/simple-chat/message-comp
     FormsModule,
     HttpClientModule,
     MzNavbarModule,
-    MzTabModule
+    MzTabModule,
+    MzCardModule
   ],
   providers: [DialogflowService, AuthService, UserService],
   bootstrap: [AppComponent]
