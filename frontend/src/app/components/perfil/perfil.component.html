@@ -1,3 +1,25 @@
-<p>
-  perfil works!
-</p>
+<div class="container-fluid">
+  <div class="row">
+    <div id="header">
+      <h4>Perfil</h4>
+      <hr>
+    </div>
+    <div id="formulario">
+      <h5>Información personal</h5>
+      <div class="row">
+        <mz-input-container class="col s12 m6">
+          <input mz-input id="input-username" type="text" [label]="'Nuevo nombre de usuario'" />
+        </mz-input-container>
+        <mz-input-container class="col s12 m6">
+          <input mz-input id="input-email" type="text" [label]="'Nuevo correo electrónico'" />
+        </mz-input-container>
+        <mz-input-container class="col s12 m6">
+          <input mz-input id="input-pass" type="password" [label]="'Nueva contraseña'" />
+        </mz-input-container>
+        <mz-input-container class="col s12 m6">
+          <input mz-input id="input-avatar" type="file" [label]="'Nuevo avatar'" />
+        </mz-input-container>
+      </div>
+    </div>
+  </div>
+</div>

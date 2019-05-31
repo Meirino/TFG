@@ -12,7 +12,7 @@
         style="height:60px;padding:5px;">
     </mz-navbar-item-container>
     <mz-navbar-item-container *ngIf=this.userService.currentUser [align]="'right'">
-      <a routerlink="/perfil" id="userspace" class="">{{this.userService.currentUser.username}}</a>
+      <a routerLink="/perfil" id="userspace" class="">{{this.userService.currentUser.username}}</a>
     </mz-navbar-item-container>
   </mz-navbar>
 </div>
