@@ -4,22 +4,38 @@
       <h4>Perfil</h4>
       <hr>
     </div>
-    <div id="formulario">
-      <h5>Información personal</h5>
-      <div class="row">
-        <mz-input-container class="col s12 m6">
-          <input mz-input id="input-username" type="text" [label]="'Nuevo nombre de usuario'" />
-        </mz-input-container>
-        <mz-input-container class="col s12 m6">
-          <input mz-input id="input-email" type="text" [label]="'Nuevo correo electrónico'" />
-        </mz-input-container>
-        <mz-input-container class="col s12 m6">
-          <input mz-input id="input-pass" type="password" [label]="'Nueva contraseña'" />
-        </mz-input-container>
-        <mz-input-container class="col s12 m6">
-          <input mz-input id="input-avatar" type="file" [label]="'Nuevo avatar'" />
-        </mz-input-container>
+    <div class="col m6 s12">
+      <div id="formulario">
+        <form name="datosDeUsuario">
+          <h5>Información personal</h5>
+          <div class="row">
+            <mz-input-container class="col s12 m6">
+              <input mz-input name="new_name" id="input-username" type="text" [label]="'Nuevo nombre de usuario'" [(ngModel)]="this.options.new_name" />
+            </mz-input-container>
+          </div>
+          <div class="row">
+            <mz-input-container class="col s12 m6">
+              <input mz-input id="input-email" type="text" [label]="'Nuevo correo electrónico'" name="new_email" [(ngModel)]="this.options.new_email"/>
+            </mz-input-container>
+          </div>
+          <div class="row">
+            <mz-input-container class="col s12 m6">
+              <input mz-input id="input-pass" type="password" [label]="'Nueva contraseña'" name="new_pass" [(ngModel)]="this.options.new_pass" />
+            </mz-input-container>
+          </div>
+          <button class="btn" type="submit" (click)="this.cambiarDatos()">Guardar</button>
+        </form>
       </div>
+    </div>
+    <div>
+      <form>
+        <h6>Nuevo Avatar</h6>
+        <div class="row">
+          <mz-input-container class="col s12 m6">
+            <input mz-input id="input-avatar" type="file" />
+          </mz-input-container>
+        </div>
+      </form>
     </div>
   </div>
 </div>

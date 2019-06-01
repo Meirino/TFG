@@ -9,5 +9,16 @@ import { UserService } from "src/app/services/user.service";
 export class PerfilComponent implements OnInit {
   constructor(public userService: UserService) {}
 
+  public options = {
+    new_name: "",
+    new_pass: "",
+    new_email: ""
+  }
+
   ngOnInit() {}
+
+  cambiarDatos() {
+    console.log(this.options);
+    this.userService.modificarDatos(this.options);
+  }
 }

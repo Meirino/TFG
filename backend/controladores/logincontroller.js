@@ -206,6 +206,46 @@ exports.cerrarSesion = (req, res) => {
   });
 }
 
+exports.cambiarDatos = (req, res) => {
+  const connection = mysql.createConnection(connection_data);
+
+  if (req.body.options.new_pass) {
+    bcrypt.genSalt(saltRounds, function (err, salt) {
+      bcrypt.hash(req.body.options.new_pass, salt, function (err, hash) {
+        let new_user = squel.update()
+          .table("users")
+          .set("username", req.body.options.new_name)
+          .set("usermail", req.body.options.new_email)
+          .set("password", hash)
+          .set("salt", salt)
+          .where("user_id = ?", req.body.id)
+          .toString();
+
+        connection.connect();
+        connection.query(new_user, (err, result) => {
+          if (err) res.status(500);
+
+          res.status(200).send(true);
+        });
+      });
+    });
+  } else {
+    let new_user = squel.update()
+      .table("users")
+      .set("username", req.body.options.new_name)
+      .set("usermail", req.body.options.new_email)
+      .where("user_id = ?", req.body.id)
+      .toString();
+
+    connection.connect();
+    connection.query(new_user, (err, result) => {
+      if (err) res.status(500);
+
+      res.status(200).send(true);
+    });
+  }
+}
+
 exports.hello_world = () => {
   return "hello world"
 }

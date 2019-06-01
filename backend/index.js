@@ -45,6 +45,8 @@ app.post("/api/chat", async (req, res) => {
   res.status(200).send(respuesta);
 });
 
+app.put('/api/datos', (req, res) => loginController.cambiarDatos(req, res));
+
 // Escuchando nuestro servidor Node
 app.listen(port, () => {
   console.log(`API REST en el puerto: http://localhost:${port}`);
