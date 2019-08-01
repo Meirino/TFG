@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable()
 export class DialogflowService {
-  public baseURL: string = "http://192.168.1.35:4000/api/chat";
+  public baseURL: string = "http://192.168.1.38:4000/api/chat";
   private nextContext: string = "";
   public httpOptions = {
     headers: new HttpHeaders({

@@ -14,7 +14,7 @@ export class User {
 
 @Injectable()
 export class UserService {
-  private baseURL: string = "http://192.168.1.35:4000/api/";
+  private baseURL: string = "http://192.168.1.38:4000/api/";
 
   public currentUser = undefined;
   public botUser = new User("AI", "AI@bot.com", "bot");

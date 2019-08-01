@@ -1,0 +1,18 @@
+<form (ngSubmit)="onSubmit()">
+  <p>En este ejercicio se deben introducir dos contraseñas distintas que cumplan los siguientes requisitos:</p>
+  <ul>
+    <li>Números</li>
+    <li>Letras mayúsculas y minúsculas</li>
+    <li>Símbolos (/@_-|)</li>
+    <li>Longitud de más de 8 carácteres</li>
+  </ul>
+  <input [(ngModel)]="this.password1" (keyup)="onKey1($event)" id="pass1" type="password" name="pass1" />
+  <mz-progress id="progreso1" [backgroundClass]="'blue lighten-4'" [percentage]="progress1" [progressClass]="'blue'">
+  </mz-progress>
+
+  <input [(ngModel)]="this.password2" (keyup)="onKey2($event)" id="pass2" type="password" name="pass2" />
+  <mz-progress id="progreso2" [backgroundClass]="'blue lighten-4'" [percentage]="progress2" [progressClass]="'blue'">
+  </mz-progress>
+
+  <button type="submit" mz-button>Enviar</button>
+</form>

@@ -11,6 +11,7 @@ import { DialogflowService } from "./services/dialogflow.service";
 import { SimpleChatComponent } from "./components/simple-chat/simple-chat.component";
 import { AuthService } from "./services/auth.service";
 import { UserService } from "./services/user.service";
+import { EjerciciosComponent } from "./components/ejercicios-component/ejercicios.component";
 
 import {
   MzNavbarModule,
@@ -18,9 +19,13 @@ import {
   MzValidationModule,
   MzInputModule
 } from "ngx-materialize";
+import { MzButtonModule } from "ngx-materialize";
 import { MzTabModule } from "ngx-materialize";
+import { MzProgressModule } from "ngx-materialize";
+import { MzCollapsibleModule } from "ngx-materialize";
 import { MessageComponentComponent } from "./components/simple-chat/message-component/message-component.component";
 import { PerfilComponent } from "./components/perfil/perfil.component";
+import { Ejercicio1Component } from "./components/ejercicios-component/ejercicio1-component/ejercicio1.component";
 
 @NgModule({
   declarations: [
@@ -29,7 +34,9 @@ import { PerfilComponent } from "./components/perfil/perfil.component";
     AuthComponent,
     SimpleChatComponent,
     MessageComponentComponent,
-    PerfilComponent
+    PerfilComponent,
+    EjerciciosComponent,
+    Ejercicio1Component
   ],
   imports: [
     BrowserModule,
@@ -40,7 +47,10 @@ import { PerfilComponent } from "./components/perfil/perfil.component";
     MzTabModule,
     MzCardModule,
     MzValidationModule,
-    MzInputModule
+    MzInputModule,
+    MzCollapsibleModule,
+    MzProgressModule,
+    MzButtonModule
   ],
   providers: [DialogflowService, AuthService, UserService],
   bootstrap: [AppComponent]

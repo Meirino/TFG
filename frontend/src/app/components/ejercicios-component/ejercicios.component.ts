@@ -2,10 +2,10 @@ import { Component, OnInit } from "@angular/core";
 
 @Component({
   selector: "ejercicios",
-  templateUrl: "./auth.component.html",
-  styleUrls: ["./auth.component.scss"]
+  templateUrl: "./ejercicios.component.html",
+  styleUrls: ["./ejercicios.component.scss"]
 })
-export class AuthComponent implements OnInit {
+export class EjerciciosComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
