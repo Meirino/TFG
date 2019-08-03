@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient } from "@angular/common/http";
 
 export class User {
   username: string;
@@ -21,7 +21,11 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  public modificarDatos(options: { new_name: string; new_pass: string; new_email: string; }) {
+  public modificarDatos(options: {
+    new_name: string;
+    new_pass: string;
+    new_email: string;
+  }) {
     if (options.new_name === "") {
       options.new_name = this.currentUser.username;
     }
@@ -32,12 +36,26 @@ export class UserService {
       options.new_pass = undefined;
     }
 
-    this.http.put(this.baseURL + "datos", {id: this.currentUser.id, options: options}).subscribe(
-      result => {
+    this.http
+      .put(this.baseURL + "datos", {
+        id: this.currentUser.id,
+        options: options
+      })
+      .subscribe(result => {
         this.currentUser.username = options.new_name;
         this.currentUser.email = options.new_email;
-      }
-    );
+      });
     console.log(options);
+  }
+
+  completarEjercicio(ejercicio_id: Number) {
+    this.http
+      .put(this.baseURL + "ejercicios", {
+        ejercicio: ejercicio_id,
+        id: this.currentUser.id
+      })
+      .subscribe(result => {
+        console.log(result);
+      });
   }
 }

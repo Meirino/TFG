@@ -10,6 +10,7 @@ const passport = require("passport");
 // Importar controladores
 const loginController = require('./controladores/logincontroller');
 const chatController = require('./controladores/chatcontroller');
+const ejercicioscontroller = require('./controladores/ejercicioscontroller');
 
 // Inicializar el puerto a usar para escuchar peticiones para la API
 const port = 4000;
@@ -46,6 +47,8 @@ app.post("/api/chat", async (req, res) => {
 });
 
 app.put('/api/datos', (req, res) => loginController.cambiarDatos(req, res));
+
+app.put('/api/ejercicios', (req, res) => ejercicioscontroller.completarEjercicio(req, res));
 
 // Escuchando nuestro servidor Node
 app.listen(port, () => {

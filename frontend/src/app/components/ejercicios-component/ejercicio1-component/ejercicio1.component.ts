@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { UserService } from "src/app/services/user.service";
 
 @Component({
   selector: "ejercicio1",
@@ -6,7 +7,7 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./ejercicio1.component.scss"]
 })
 export class Ejercicio1Component implements OnInit {
-  constructor() {}
+  constructor(private userservice: UserService) {}
 
   password1: String = "";
   password2: String = "";
@@ -18,7 +19,16 @@ export class Ejercicio1Component implements OnInit {
 
   onSubmit() {
     // Comprobar fuerza de ambas contraseñas
-    console.log(this.password1);
+    if (
+      this.validarPassword(this.password1) > 0 &&
+      this.validarPassword(this.password2) > 0
+    ) {
+      // Llamar al servicio de usuario para que de el ejercicio como completado
+      this.userservice.completarEjercicio(1);
+    } else {
+      // Mostrar mensaje de seguir intentándolo
+    }
+    // Si pasa la verificación, añadir a la base de datos el ejercicio completado
   }
 
   onKey1(event: any) {
