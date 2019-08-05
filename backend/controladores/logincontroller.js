@@ -8,7 +8,8 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const LocalStrategy = require("passport-local").Strategy;
 const passport = require("passport");
-
+const ejercicioscontroller = require('./ejercicioscontroller');
+const chatcontroller = require('./chatcontroller');
 // Importar gnerador de IDs
 const uuid = require("uuid");
 
@@ -142,7 +143,16 @@ exports.register = function (req, res, next) {
           .set("salt", salt)
           .toString();
 
-        connection.query(new_user);
+        connection.query(new_user, (err, result) => {
+          // Inicializar las tablas de ejercicios y lecciones completadas
+          if (err) res.status(500).send(err)
+
+          if (!err) {
+            res.sendStatus(201);
+            ejercicioscontroller.inicializarEjercicios(result.insertId);
+            chatcontroller.inicializarLecciones(result.insertId);
+          }
+        });
       });
     });
   } else {
