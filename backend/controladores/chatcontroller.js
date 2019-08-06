@@ -49,10 +49,10 @@ exports.makePost = async (
 
   // Send request and log result
   const responses = await sessionClient.detectIntent(request);
-  console.log("Detected intent");
+  // console.log("Detected intent");
   const result = responses[0].queryResult;
-  console.log(`  Query: ${result.queryText}`);
-  console.log(`  Response: ${result.fulfillmentText}`);
+  // console.log(`  Query: ${result.queryText}`);
+  // console.log(`  Response: ${result.fulfillmentText}`);
   if (result.intent) {
     console.log(`  Intent: ${result.intent.displayName}`);
   } else {
@@ -63,13 +63,16 @@ exports.makePost = async (
     return {
       text: result.fulfillmentText,
       context: result.outputContexts[0].name ?
-        result.outputContexts[0].name : "//"
+        result.outputContexts[0].name : "//",
+      intent: result.intent.displayName
     };
   }
-  marked(result.fulfillmentText, (err, result) => {
+
+  marked(result.fulfillmentText, (err, result2) => {
     return {
-      text: result,
-      context: "DefaultContext"
+      text: result2,
+      context: "DefaultContext",
+      intent: result.intent.displayName
     };
   })
 };
@@ -108,7 +111,7 @@ exports.inicializarLecciones = (user_id) => {
   });
 }
 
-exports.completarEjercicio = (req, res) => {
+exports.completarLeccion = (req, res) => {
   const connection = mysql.createConnection(connection_data);
 
   console.log(req.body);
@@ -117,7 +120,7 @@ exports.completarEjercicio = (req, res) => {
   let complete = squel.update()
     .table("completed_lessons")
     .set("completed", 1)
-    .where("user_id = ? AND exercise_id = ?", req.body.id, req.body.leccion)
+    .where("user_id = ? AND lesson_id = ?", req.body.usuario, req.body.leccion)
     .toString();
 
   connection.connect();

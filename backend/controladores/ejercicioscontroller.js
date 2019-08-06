@@ -12,6 +12,22 @@ exports.inicializarEjercicios = (user_id) => {
             exercise_id: 1,
             user_id: user_id,
             completed: 0
+        }, {
+            exercise_id: 2,
+            user_id: user_id,
+            completed: 0
+        }, {
+            exercise_id: 3,
+            user_id: user_id,
+            completed: 0
+        }, {
+            exercise_id: 4,
+            user_id: user_id,
+            completed: 0
+        }, {
+            exercise_id: 4,
+            user_id: user_id,
+            completed: 0
         }])
         .toString();
 

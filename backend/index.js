@@ -50,6 +50,8 @@ app.put('/api/datos', (req, res) => loginController.cambiarDatos(req, res));
 
 app.put('/api/ejercicios', (req, res) => ejercicioscontroller.completarEjercicio(req, res));
 
+app.put('/api/lecciones', (req, res) => chatController.completarLeccion(req, res));
+
 // Escuchando nuestro servidor Node
 app.listen(port, () => {
   console.log(`API REST en el puerto: http://localhost:${port}`);
