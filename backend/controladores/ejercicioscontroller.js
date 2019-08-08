@@ -58,3 +58,14 @@ exports.completarEjercicio = (req, res) => {
         res.status(200).send(true);
     });
 }
+
+exports.getUserExercises = (req, res) => {
+    const connection = mysql.createConnection(connection_data);
+
+    let user_exercises = `SELECT exercises.name, completed_exercises.completed FROM exercises JOIN completed_exercises ON exercises.ID = completed_exercises.exercise_id WHERE user_id = ${req.params.user_id}`
+
+    connection.connect();
+    connection.query(user_exercises, (err, result) => {
+        res.status(200).send(result);
+    });
+}

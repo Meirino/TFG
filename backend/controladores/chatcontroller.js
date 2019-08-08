@@ -114,8 +114,6 @@ exports.inicializarLecciones = (user_id) => {
 exports.completarLeccion = (req, res) => {
   const connection = mysql.createConnection(connection_data);
 
-  console.log(req.body);
-
   // Crear query
   let complete = squel.update()
     .table("completed_lessons")
@@ -128,5 +126,16 @@ exports.completarLeccion = (req, res) => {
     if (err) res.status(500);
 
     res.status(200).send(true);
+  });
+}
+
+exports.getUserLessons = (req, res) => {
+  const connection = mysql.createConnection(connection_data);
+
+  let user_lessons = `SELECT lessons.name, completed_lessons.completed FROM lessons JOIN completed_lessons ON lessons.lesson_id = completed_lessons.lesson_id WHERE user_id = ${req.params.user_id}`
+
+  connection.connect();
+  connection.query(user_lessons, (err, result) => {
+    res.status(200).send(result);
   });
 }

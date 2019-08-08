@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 export class User {
@@ -13,13 +13,19 @@ export class User {
 }
 
 @Injectable()
-export class UserService {
-  private baseURL: string = "http://192.168.1.38:4000/api/";
+export class UserService implements OnInit {
+  private baseURL: string = "http://192.168.1.36:4000/api/";
 
   public currentUser = undefined;
   public botUser = new User("AI", "AI@bot.com", "bot");
 
   constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    // if (localStorage.getItem("user_id")) {
+    //   this.currentUser = localStorage.getItem("user_id");
+    // }
+  }
 
   public modificarDatos(options: {
     new_name: string;
@@ -57,5 +63,13 @@ export class UserService {
       .subscribe(result => {
         console.log(result);
       });
+  }
+
+  getUserLessonProgress() {
+    return this.http.get(this.baseURL + "lecciones/" + this.currentUser.id);
+  }
+
+  getUserExerciseProgress() {
+    return this.http.get(this.baseURL + "ejercicios/" + this.currentUser.id);
   }
 }

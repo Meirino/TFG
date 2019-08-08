@@ -4,38 +4,48 @@
       <h4>Perfil</h4>
       <hr>
     </div>
-    <div class="col m6 s12">
-      <div id="formulario">
-        <form name="datosDeUsuario">
-          <h5>Información personal</h5>
-          <div class="row">
-            <mz-input-container class="col s12 m6">
-              <input mz-input name="new_name" id="input-username" type="text" [label]="'Nuevo nombre de usuario'" [(ngModel)]="this.options.new_name" />
-            </mz-input-container>
+    <mz-tab [fixedTabWidth]="'true'">
+      <mz-tab-item [active]="'true'" [label]="'Progreso'">
+        <app-progress></app-progress>
+      </mz-tab-item>
+      <mz-tab-item [label]="'Editar información'">
+        <div class="col m6 s12">
+          <div id="formulario">
+            <form name="datosDeUsuario">
+              <h5>Información personal</h5>
+              <div class="row">
+                <mz-input-container class="col s12 m6">
+                  <input mz-input name="new_name" id="input-username" type="text" [label]="'Nuevo nombre de usuario'"
+                    [(ngModel)]="this.options.new_name" />
+                </mz-input-container>
+              </div>
+              <div class="row">
+                <mz-input-container class="col s12 m6">
+                  <input mz-input id="input-email" type="text" [label]="'Nuevo correo electrónico'" name="new_email"
+                    [(ngModel)]="this.options.new_email" />
+                </mz-input-container>
+              </div>
+              <div class="row">
+                <mz-input-container class="col s12 m6">
+                  <input mz-input id="input-pass" type="password" [label]="'Nueva contraseña'" name="new_pass"
+                    [(ngModel)]="this.options.new_pass" />
+                </mz-input-container>
+              </div>
+              <button class="btn" type="submit" (click)="this.cambiarDatos()">Guardar</button>
+            </form>
           </div>
-          <div class="row">
-            <mz-input-container class="col s12 m6">
-              <input mz-input id="input-email" type="text" [label]="'Nuevo correo electrónico'" name="new_email" [(ngModel)]="this.options.new_email"/>
-            </mz-input-container>
-          </div>
-          <div class="row">
-            <mz-input-container class="col s12 m6">
-              <input mz-input id="input-pass" type="password" [label]="'Nueva contraseña'" name="new_pass" [(ngModel)]="this.options.new_pass" />
-            </mz-input-container>
-          </div>
-          <button class="btn" type="submit" (click)="this.cambiarDatos()">Guardar</button>
-        </form>
-      </div>
-    </div>
-    <div>
-      <form>
-        <h6>Nuevo Avatar</h6>
-        <div class="row">
-          <mz-input-container class="col s12 m6">
-            <input mz-input id="input-avatar" type="file" />
-          </mz-input-container>
         </div>
-      </form>
-    </div>
+        <div>
+          <form>
+            <h6>Nuevo Avatar</h6>
+            <div class="row">
+              <mz-input-container class="col s12 m6">
+                <input mz-input id="input-avatar" type="file" />
+              </mz-input-container>
+            </div>
+          </form>
+        </div>
+      </mz-tab-item>
+    </mz-tab>
   </div>
 </div>

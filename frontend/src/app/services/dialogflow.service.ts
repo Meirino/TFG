@@ -6,7 +6,7 @@ import { UserService } from "./user.service";
 
 @Injectable()
 export class DialogflowService {
-  public baseURL: string = "http://192.168.1.38:4000/api/chat";
+  public baseURL: string = "http://192.168.1.36:4000/api/chat";
   private nextContext: string = "";
   public httpOptions = {
     headers: new HttpHeaders({
@@ -38,7 +38,7 @@ export class DialogflowService {
 
   public completeLesson(id: Number) {
     this.http
-      .put("http://192.168.1.38:4000/api/lecciones", {
+      .put("http://192.168.1.36:4000/api/lecciones", {
         leccion: id,
         usuario: parseInt(this.userService.currentUser.id)
       })

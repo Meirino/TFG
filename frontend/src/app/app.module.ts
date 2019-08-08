@@ -26,6 +26,7 @@ import { MzCollapsibleModule } from "ngx-materialize";
 import { MessageComponentComponent } from "./components/simple-chat/message-component/message-component.component";
 import { PerfilComponent } from "./components/perfil/perfil.component";
 import { Ejercicio1Component } from "./components/ejercicios-component/ejercicio1-component/ejercicio1.component";
+import { ProgressComponent } from "./components/progress-component/progress.component";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { Ejercicio1Component } from "./components/ejercicios-component/ejercicio
     MessageComponentComponent,
     PerfilComponent,
     EjerciciosComponent,
-    Ejercicio1Component
+    Ejercicio1Component,
+    ProgressComponent
   ],
   imports: [
     BrowserModule,

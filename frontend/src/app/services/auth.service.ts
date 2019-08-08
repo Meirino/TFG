@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { User } from "./user.service";
+import { User, UserService } from "./user.service";
 import { Subject } from "rxjs";
 import { Router } from "@angular/router";
 
@@ -40,11 +40,15 @@ export interface errorRes {
 
 @Injectable()
 export class AuthService {
-  public baseURL: string = "http://192.168.1.38:4000/api/";
+  public baseURL: string = "http://192.168.1.36:4000/api/";
   public Register: User;
   private logInErrorSubject = new Subject<string>();
 
-  constructor(public http: HttpClient, public router: Router) {}
+  constructor(
+    public http: HttpClient,
+    public router: Router,
+    public userService: UserService
+  ) {}
 
   public getLoginErrors(): Subject<string> {
     return this.logInErrorSubject;
@@ -89,6 +93,11 @@ export class AuthService {
           })
           .pipe(
             map(res => {
+              this.userService.currentUser = new User(
+                res.username,
+                res.email,
+                res.id
+              );
               return new User(res.username, res.email, res.id);
             })
           );

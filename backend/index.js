@@ -33,24 +33,19 @@ app.use(
 
 // Definir las rutas y métodos de la API
 app.post("/api/login", (req, res, next) => loginController.login(req, res, next));
-
 app.post("/api/refreshLogin", (req, res) => loginController.refreshLogin(req, res));
-
 app.post("/api/signout", (req, res) => loginController.cerrarSesion(req, res));
-
 app.post("/api/register", (req, res) => loginController.register(req, res));
-
 app.post("/api/chat", async (req, res) => {
   console.log(req.body);
   let respuesta = await chatController.makePost(req.body.mensaje, req.body.context);
   res.status(200).send(respuesta);
 });
-
 app.put('/api/datos', (req, res) => loginController.cambiarDatos(req, res));
-
 app.put('/api/ejercicios', (req, res) => ejercicioscontroller.completarEjercicio(req, res));
-
 app.put('/api/lecciones', (req, res) => chatController.completarLeccion(req, res));
+app.get('/api/lecciones/:user_id', (req, res) => chatController.getUserLessons(req, res));
+app.get('/api/ejercicios/:user_id', (req, res) => ejercicioscontroller.getUserExercises(req, res));
 
 // Escuchando nuestro servidor Node
 app.listen(port, () => {

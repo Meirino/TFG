@@ -1,0 +1,12 @@
+<div>
+  <div class="col m6 s12" *ngIf="lessonProgress">
+    <h5>Material</h5>
+    <p *ngFor="let leccion of lessonProgress">{{leccion.name}} <i *ngIf="leccion.completed == 1">- Completado</i></p>
+  </div>
+  <div class="col m6 s12" *ngIf="lessonProgress">
+    <h5>Ejercicios</h5>
+    <p *ngFor="let ejercicio of exerciseProgress">{{ejercicio.name}} <i *ngIf="ejercicio.completed == 1">-
+        Completado</i>
+    </p>
+  </div>
+</div>
