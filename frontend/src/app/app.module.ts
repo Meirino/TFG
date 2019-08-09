@@ -27,6 +27,7 @@ import { MessageComponentComponent } from "./components/simple-chat/message-comp
 import { PerfilComponent } from "./components/perfil/perfil.component";
 import { Ejercicio1Component } from "./components/ejercicios-component/ejercicio1-component/ejercicio1.component";
 import { ProgressComponent } from "./components/progress-component/progress.component";
+import { IndexComponent } from "./components/index-component/index.component";
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ProgressComponent } from "./components/progress-component/progress.comp
     PerfilComponent,
     EjerciciosComponent,
     Ejercicio1Component,
-    ProgressComponent
+    ProgressComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule,

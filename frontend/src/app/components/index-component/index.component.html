@@ -1,0 +1,6 @@
+<div *ngIf="this.userService.currentUser === undefined">
+  <bot-auth></bot-auth>
+</div>
+<div *ngIf="this.userService.currentUser !== undefined">
+  <app-progress></app-progress>
+</div>
