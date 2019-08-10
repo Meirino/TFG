@@ -28,6 +28,7 @@ import { PerfilComponent } from "./components/perfil/perfil.component";
 import { Ejercicio1Component } from "./components/ejercicios-component/ejercicio1-component/ejercicio1.component";
 import { ProgressComponent } from "./components/progress-component/progress.component";
 import { IndexComponent } from "./components/index-component/index.component";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { IndexComponent } from "./components/index-component/index.component";
     MzInputModule,
     MzCollapsibleModule,
     MzProgressModule,
-    MzButtonModule
+    MzButtonModule,
+    FontAwesomeModule
   ],
   providers: [DialogflowService, AuthService, UserService],
   bootstrap: [AppComponent]
