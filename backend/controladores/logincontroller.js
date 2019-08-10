@@ -60,7 +60,7 @@ exports.passportLocalStrategy = new LocalStrategy({
       if (!user) {
         // Si no se ha encontrado usuario en la búsqueda
         console.log(`El usuario buscado no existe.`)
-        return done(null, false, {
+        return done(404, false, {
           message: "Este usuario no existe."
         });
       } else {
@@ -91,13 +91,13 @@ exports.passportLocalStrategy = new LocalStrategy({
               });
             } catch (error) {
               console.log("Error de inserción de token");
-              return done(null, false, {
+              return done(500, false, {
                 message: "Error de inserción de token"
               });
             }
           } else {
             console.log("Revise sus datos");
-            return done(null, false, {
+            return done(401, false, {
               message: "Incorrect password."
             });
           }
@@ -117,10 +117,11 @@ exports.login = function (req, res, next) {
       res.send({
         user: user
       });
-    } else {
-      res.send({
+    }
+    if (err) {
+      res.status(err).send({
         info: info
-      });
+      })
     }
   })(req, res, next);
 }
@@ -132,7 +133,7 @@ exports.register = function (req, res, next) {
   /* Si los valores de contraseña y email son válidos, uso BCrypt para generar una salt
   y usarla para encriptar la contraseña con ella.
   Finalmente se guarda en MySQL los datos del usuario */
-  if (req.body.email && req.body.password) {
+  if (req.body.email && req.body.password && req.body.username) {
     bcrypt.genSalt(saltRounds, function (err, salt) {
       bcrypt.hash(req.body.password, salt, function (err, hash) {
         let new_user = squel.insert()
@@ -145,7 +146,13 @@ exports.register = function (req, res, next) {
 
         connection.query(new_user, (err, result) => {
           // Inicializar las tablas de ejercicios y lecciones completadas
-          if (err) res.status(500).send(err)
+          if (err.errno === 1062) {
+            res.status(409).send(err);
+          }
+
+          if (err.errno !== 1062) {
+            res.status(500).send(err);
+          }
 
           if (!err) {
             res.sendStatus(201);
@@ -156,7 +163,7 @@ exports.register = function (req, res, next) {
       });
     });
   } else {
-    res.status(500);
+    res.status(501).send("Datos incorrectos");
   }
 }
 
@@ -258,4 +265,19 @@ exports.cambiarDatos = (req, res) => {
 
 exports.hello_world = () => {
   return "hello world"
+}
+
+exports.checkEmail = (req, res) => {
+  const connection = mysql.createConnection(connection_data);
+  connection.connect();
+  let query = `SELECT EXISTS(SELECT 1 FROM users WHERE users.usermail = "${req.params.email} LIMIT 1") AS "Query"`;
+  connection.query(query, (err, result) => {
+    if (err) res.status(500).send("Algo salió mal");
+
+    if (result[0]["Query"] === 1) {
+      res.status(200).send(true);
+    } else {
+      res.status(200).send(false);
+    }
+  });
 }

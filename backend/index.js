@@ -46,6 +46,7 @@ app.put('/api/ejercicios', (req, res) => ejercicioscontroller.completarEjercicio
 app.put('/api/lecciones', (req, res) => chatController.completarLeccion(req, res));
 app.get('/api/lecciones/:user_id', (req, res) => chatController.getUserLessons(req, res));
 app.get('/api/ejercicios/:user_id', (req, res) => ejercicioscontroller.getUserExercises(req, res));
+app.get('/api/email/:email', (req, res) => loginController.checkEmail(req, res));
 
 // Escuchando nuestro servidor Node
 app.listen(port, () => {

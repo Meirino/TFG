@@ -7,6 +7,7 @@
             <div class="card-body">
               {{errorMessage}}
               <h4 class="card-title">Login</h4>
+              <div class="error" *ngIf="this.errorMessageLogin">{{this.errorMessageLogin}}</div>
               <form (ngSubmit)="login()">
                 <div class="input-field">
                   <label for="exampleInputEmail2">Correo Electrónico</label>
@@ -40,6 +41,7 @@
           <div class="card" id="registro">
             <div class="card-body">
               <h4 class="card-title">Registro</h4>
+              <div class="error" *ngIf="this.errorMessage">{{this.errorMessage}}</div>
               <form (ngSubmit)="register()">
                 <div class="input-field">
                   <label for="exampleInputEmail3">Nombre de usuario</label>

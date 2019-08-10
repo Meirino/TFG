@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, throwError } from "rxjs";
+import { retry, catchError } from "rxjs/operators";
 import { map } from "rxjs/operators";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { User, UserService } from "./user.service";
@@ -58,25 +59,23 @@ export class AuthService {
     return this.http.post<User>(this.baseURL + "register", user).pipe(
       map(res => {
         return "OK";
-      })
+      }),
+      catchError(this.handleError)
     );
   }
 
   /* Realiza la petición de login con los datos del usuario y recibe el resultado
   Posteriormente guarda el ID y el token de sesión en el navegador */
   public login(user: LoginInfo): Observable<User> {
-    try {
-      return this.http.post<loginRes>(this.baseURL + "login", user).pipe(
-        map(res => {
-          localStorage.setItem("user_id", res.user.id);
-          localStorage.setItem("user_token", res.user.sessionToken);
+    return this.http.post<loginRes>(this.baseURL + "login", user).pipe(
+      map(res => {
+        localStorage.setItem("user_id", res.user.id);
+        localStorage.setItem("user_token", res.user.sessionToken);
 
-          return new User(res.user.username, res.user.email, res.user.id);
-        })
-      );
-    } catch (error) {
-      this.logInErrorSubject.next("Datos incorrectos");
-    }
+        return new User(res.user.username, res.user.email, res.user.id);
+      }),
+      catchError(this.handleError)
+    );
   }
 
   /* Comprueba si existe un token de sesión almacenado en el navegador
@@ -132,5 +131,35 @@ export class AuthService {
         this.logInErrorSubject.next("Algo ha salido mal");
       }
     }
+  }
+
+  public checkEmail(email: string) {
+    return this.http.get(this.baseURL + `email/${email}`);
+  }
+
+  handleError(error) {
+    let errorMessage = "";
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Error del servidor
+      if (error.status === 409) {
+        errorMessage = "Ya existe un usuario registrado con ese correo.";
+      }
+      if (error.status === 500) {
+        errorMessage = "Algo salió mal.";
+      }
+      if (error.status === 500) {
+        errorMessage = "Algo salió mal.";
+      }
+      if (error.status === 404) {
+        errorMessage = "Usuario no encontrado. Revise los datos.";
+      }
+      if (error.status === 401) {
+        errorMessage = "Contraseña incorrecta.";
+      }
+    }
+    return throwError(errorMessage);
   }
 }
