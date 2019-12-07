@@ -9,16 +9,33 @@ import { UserService } from "src/app/services/user.service";
 export class PerfilComponent implements OnInit {
   constructor(public userService: UserService) {}
 
+  public archivo: File = null;
+
   public options = {
     new_name: "",
     new_pass: "",
     new_email: ""
-  }
+  };
 
   ngOnInit() {}
 
   cambiarDatos() {
     console.log(this.options);
     this.userService.modificarDatos(this.options);
+  }
+
+  subirArchivo(files: FileList) {
+    this.archivo = files.item(0);
+  }
+
+  subirAvatar() {
+    this.userService.cambiarAvatar(this.archivo).subscribe(
+      data => {
+        // do something, if upload success
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 }

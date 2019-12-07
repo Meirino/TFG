@@ -30,6 +30,8 @@ import { ProgressComponent } from "./components/progress-component/progress.comp
 import { IndexComponent } from "./components/index-component/index.component";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 
+import { AlertModule } from "ngx-bootstrap";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +58,8 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
     MzCollapsibleModule,
     MzProgressModule,
     MzButtonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    AlertModule.forRoot()
   ],
   providers: [DialogflowService, AuthService, UserService],
   bootstrap: [AppComponent]

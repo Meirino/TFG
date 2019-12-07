@@ -6,6 +6,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 const passport = require("passport");
+const multer = require('multer');
+const upload = multer();
+const fs = require('fs')
 
 // Importar controladores
 const loginController = require('./controladores/logincontroller');
@@ -36,6 +39,15 @@ app.post("/api/login", (req, res, next) => loginController.login(req, res, next)
 app.post("/api/refreshLogin", (req, res) => loginController.refreshLogin(req, res));
 app.post("/api/signout", (req, res) => loginController.cerrarSesion(req, res));
 app.post("/api/register", (req, res) => loginController.register(req, res));
+app.post("/api/avatar", upload.any(), (req, res) => {
+  let file = req.files[0];
+  console.log(file);
+  let filePath = __dirname + `/public/avatars/0${file.fieldname}.jpg`;
+  fs.appendFile(filePath, file.buffer, function () {
+    res.status(201).send();
+  });
+  res.status(201).send();
+});
 app.post("/api/chat", async (req, res) => {
   console.log(req.body);
   let respuesta = await chatController.makePost(req.body.mensaje, req.body.context);

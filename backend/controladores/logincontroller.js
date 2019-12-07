@@ -146,18 +146,19 @@ exports.register = function (req, res, next) {
 
         connection.query(new_user, (err, result) => {
           // Inicializar las tablas de ejercicios y lecciones completadas
-          if (err.errno === 1062) {
+
+          if (!err) {
+            ejercicioscontroller.inicializarEjercicios(result.insertId);
+            chatcontroller.inicializarLecciones(result.insertId);
+            res.sendStatus(201);
+          }
+
+          if (err & err.errno === 1062) {
             res.status(409).send(err);
           }
 
-          if (err.errno !== 1062) {
+          if (err & err.errno !== 1062) {
             res.status(500).send(err);
-          }
-
-          if (!err) {
-            res.sendStatus(201);
-            ejercicioscontroller.inicializarEjercicios(result.insertId);
-            chatcontroller.inicializarLecciones(result.insertId);
           }
         });
       });
@@ -279,5 +280,13 @@ exports.checkEmail = (req, res) => {
     } else {
       res.status(200).send(false);
     }
+  });
+}
+
+exports.cambiarAvatar = (req, res) => {
+  let file = req.files[0];
+  let filePath = __dirname + `/public/avatars/${file.originalname}`;
+  fs.appendFile(filePath, file.buffer, function () {
+    res.status(201).send();
   });
 }

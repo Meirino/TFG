@@ -40,8 +40,10 @@
             <h6>Nuevo Avatar</h6>
             <div class="row">
               <mz-input-container class="col s12 m6">
-                <input mz-input id="input-avatar" type="file" />
+                <input mz-input id="input-avatar" id="avatar" type="file"
+                  (change)="subirArchivo($event.target.files)" />
               </mz-input-container>
+              <button class="btn" type="submit" (click)="this.subirAvatar()">Cambiar</button>
             </div>
           </form>
         </div>

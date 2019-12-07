@@ -1,5 +1,6 @@
 import { Injectable, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
 
 export class User {
   username: string;
@@ -14,7 +15,7 @@ export class User {
 
 @Injectable()
 export class UserService implements OnInit {
-  private baseURL: string = "http://192.168.1.36:4000/api/";
+  private baseURL: string = "http://18.212.103.97:4000/api/";
 
   public currentUser = undefined;
   public botUser = new User("AI", "AI@bot.com", "bot");
@@ -71,5 +72,11 @@ export class UserService implements OnInit {
 
   getUserExerciseProgress() {
     return this.http.get(this.baseURL + "ejercicios/" + this.currentUser.id);
+  }
+
+  cambiarAvatar(archivo: File) {
+    const formData: FormData = new FormData();
+    formData.append(this.currentUser.id, archivo, archivo.name);
+    return this.http.post(this.baseURL + "avatar", formData);
   }
 }
