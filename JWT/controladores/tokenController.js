@@ -77,6 +77,11 @@ let login = (req, res) => {
                 let response = checkLoginData(email, password, user_email, user_hashed_password);
                 let code = response.code;
                 delete response['code'];
+                response.userdata = {
+                    id: user_data.id,
+                    user_name: user_data.username,
+                    email: user_email
+                };
                 res.status(code).send(response);
             }
         }
@@ -100,7 +105,8 @@ function checkLoginData(email, password, user_email, user_hashed_password) {
                     code: 200,
                     success: true,
                     message: '¡Autenticación correcta!',
-                    token: token
+                    token: token,
+                    userdata: undefined
                 };
             } else {
                 return {

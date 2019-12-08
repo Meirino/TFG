@@ -25,7 +25,7 @@
     "@mdi/font": "^4.6.95",
     "bootstrap": "^4.4.1",
     "chart.js": "^2.9.3",
-    "core-js": "^3.4.5",
+    "core-js": "^3.4.7",
     "font-awesome": "^4.7.0",
     "materialize-css": "^1.0.0",
     "materializecss": "^1.0.11",
