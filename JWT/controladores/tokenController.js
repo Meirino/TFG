@@ -1,5 +1,9 @@
 let jwt = require('jsonwebtoken');
 const config = require('../config');
+/* Importar conexiones a BDD */
+const squel = require("squel");
+const mysql = require("mysql2");
+const connection_data = config.connection_data;
 
 let checkToken = (req, res, next) => {
     let token = req.headers['x-access-token'] || req.headers['authorization']; // Express headers are auto converted to lowercase
@@ -29,35 +33,62 @@ let checkToken = (req, res, next) => {
 };
 
 let login = (req, res) => {
-    let username = req.body.username;
-    let password = req.body.password;
-    // For the given username fetch user from DB
-    let mockedUsername = 'admin';
-    let mockedPassword = 'password';
 
-    if (username && password) {
-        if (username === mockedUsername && password === mockedPassword) {
+    // Campos del formulario
+    let email = req.body.email;
+    let password = req.body.password;
+
+    // Inicializar variables
+    let user_email = '';
+    let user_hashed_password = '';
+
+    // Datos de conexión
+    const connection = mysql.createConnection(connection_data);
+    const selectUser = squel.select()
+        .field("user_id", "id")
+        .field("username")
+        .field("usermail", "email")
+        .field("password")
+        .from("users", "u")
+        .where("u.usermail = ?", email)
+        .toString();
+
+    // Creación de la conexión MySQL y ejecución de la query
+    connection.connect();
+    connection.query(selectUser, (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            let user_data = result[0];
+            user_email = user_data.email;
+            user_hashed_password = user_data.password;
+        }
+    });
+
+    // Comprobar que los datos de login son correctos
+    if (email && password) {
+        if (email === user_email && password === user_hashed_password) {
             let token = jwt.sign({username: username},
                 config.secret,
-                { expiresIn: '24h' // expires in 24 hours
+                { expiresIn: '24h' // Expira en 24 horas
                 }
             );
-            // return the JWT token for the future API calls
-            res.json({
+            // Token JWT
+            res.send({
                 success: true,
-                message: 'Authentication successful!',
+                message: '¡Autenticación correcta!',
                 token: token
             });
         } else {
-            res.send(403).json({
+            res.status(403).send({
                 success: false,
-                message: 'Incorrect username or password'
+                message: 'Datos incorrectos'
             });
         }
     } else {
-        res.send(400).json({
+        res.status(400).send({
             success: false,
-            message: 'Authentication failed! Please check the request'
+            message: '¡Autenticación fallida! Revise los campos'
         });
     }
 };

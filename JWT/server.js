@@ -11,5 +11,5 @@ app.use(bodyParser.json());
 
 // Routes & Handlers
 app.post('/login', controller.login);
-// app.get('/', middleware.checkToken, handlers.index);
+app.get('/', controller.checkToken, controller.index);
 app.listen(port, () => console.log(`Server is listening on port: ${port}`));
