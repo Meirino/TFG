@@ -1,9 +1,14 @@
 let jwt = require('jsonwebtoken');
 const config = require('../config');
+
 /* Importar conexiones a BDD */
 const squel = require("squel");
 const mysql = require("mysql2");
 const connection_data = config.connection_data;
+
+/* bcrypt */
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 let checkToken = (req, res, next) => {
     let token = req.headers['x-access-token'] || req.headers['authorization']; // Express headers are auto converted to lowercase
@@ -59,39 +64,66 @@ let login = (req, res) => {
         if (err) {
             console.log(err)
         } else {
-            let user_data = result[0];
-            user_email = user_data.email;
-            user_hashed_password = user_data.password;
+            if (result.length === 0) {
+                res.status(404).send({
+                    success: false,
+                    message: 'Datos incorrectos: Usuario no encontrado.'
+                });
+            } else {
+                let user_data = result[0];
+                user_email = user_data.email;
+                user_hashed_password = user_data.password;
+
+                let response = checkLoginData(email, password, user_email, user_hashed_password);
+                let code = response.code;
+                delete response['code'];
+                res.status(code).send(response);
+            }
         }
     });
+};
+
+function checkLoginData(email, password, user_email, user_hashed_password) {
 
     // Comprobar que los datos de login son correctos
     if (email && password) {
-        if (email === user_email && password === user_hashed_password) {
-            let token = jwt.sign({username: username},
-                config.secret,
-                { expiresIn: '24h' // Expira en 24 horas
-                }
-            );
-            // Token JWT
-            res.send({
-                success: true,
-                message: '¡Autenticación correcta!',
-                token: token
-            });
+        if (email === user_email) {
+            let pass_correct = bcrypt.compareSync(password, user_hashed_password);
+            if(pass_correct) {
+                let token = jwt.sign({email: user_email},
+                    config.secret,
+                    { expiresIn: '24h' // Expira en 24 horas
+                    }
+                );
+                // Devolver Token JWT
+                return {
+                    code: 200,
+                    success: true,
+                    message: '¡Autenticación correcta!',
+                    token: token
+                };
+            } else {
+                return {
+                    code: 403,
+                    success: false,
+                    message: 'Datos incorrectos'
+                };
+            }
         } else {
-            res.status(403).send({
+            return {
+                code: 403,
                 success: false,
                 message: 'Datos incorrectos'
-            });
+            };
         }
     } else {
-        res.status(400).send({
+        return {
+            code: 400,
             success: false,
             message: '¡Autenticación fallida! Revise los campos'
-        });
+        };
     }
-};
+}
 
 let index = (req, res) => {
     res.json({
