@@ -10,6 +10,10 @@ const connection_data = config.connection_data;
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+/* Redis */
+let redis = require("redis");
+let client = redis.createClient(6379, "localhost");
+
 let checkToken = (req, res, next) => {
     let token = req.headers['x-access-token'] || req.headers['authorization']; // Express headers are auto converted to lowercase
     if (token.startsWith('Bearer')) {
@@ -75,13 +79,18 @@ let login = (req, res) => {
                 user_hashed_password = user_data.password;
 
                 let response = checkLoginData(email, password, user_email, user_hashed_password);
-                let code = response.code;
-                delete response['code'];
-                response.userdata = {
+                let data = {
                     id: user_data.id,
                     user_name: user_data.username,
                     email: user_email
                 };
+                // Guardar token en Redis
+                response.token? client.set(response.token, JSON.stringify(data)) : console.log("Login fallido.");
+
+                // Devolver respuesta
+                let code = response.code;
+                delete response['code'];
+                response.userdata = data;
                 res.status(code).send(response);
             }
         }
@@ -138,8 +147,40 @@ let index = (req, res) => {
     });
 };
 
+let logout = (req, res) => {
+
+    let token = req.headers['x-access-token'] || req.headers['authorization'];
+    if (token.startsWith('Bearer')) {
+        // Eliminar Bearer del string
+        token = token.slice(7, token.length);
+    }
+
+    if (token) {
+        jwt.verify(token, config.secret, (err, decoded) => {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: 'El token no es válido'
+                });
+            } else {
+                client.del(token);
+                res.status(204).send({
+                    success: true,
+                    message: 'La sesión se ha eliminado'
+                });
+            }
+        });
+    } else {
+        return res.json({
+            success: false,
+            message: 'No se ha enviado un token'
+        });
+    }
+};
+
 module.exports = {
     checkToken: checkToken,
     login: login,
-    index: index
+    index: index,
+    logout: logout
 };

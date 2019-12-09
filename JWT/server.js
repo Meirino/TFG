@@ -12,4 +12,5 @@ app.use(bodyParser.json());
 // Routes & Handlers
 app.post('/login', controller.login);
 app.get('/', controller.checkToken, controller.index);
+app.get('/logout', controller.logout);
 app.listen(port, () => console.log(`Server is listening on port: ${port}`));
