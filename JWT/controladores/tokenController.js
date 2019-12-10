@@ -26,11 +26,23 @@ let checkToken = (req, res, next) => {
             if (err) {
                 return res.json({
                     success: false,
-                    message: 'Token is not valid'
+                    message: 'Token no válido'
                 });
             } else {
                 req.decoded = decoded;
-                next();
+                client.get(token, (err, data) => {
+                    if(err || data === null) {
+                        return res.json({
+                            success: false,
+                            message: 'Token expirado'
+                        });
+                    } else {
+                        return res.status(200).send({
+                            success: true,
+                            message: 'Token válido'
+                        });
+                    }
+                });
             }
         });
     } else {
