@@ -1,47 +1,31 @@
-import { Injectable } from "@angular/core";
-import { Observable, throwError } from "rxjs";
-import { retry, catchError } from "rxjs/operators";
-import { map } from "rxjs/operators";
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { User, UserService } from "./user.service";
-import { Subject } from "rxjs";
-import { Router } from "@angular/router";
+import { Injectable } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { UserService } from './user.service';
+import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import {stringify} from 'querystring';
+import { User } from '../models/user';
+import { LoginObject } from '../models/login';
+import { Session } from '../models/session';
 
-// Interfaz para recoger los datos de login
-export interface LoginInfo {
-  email: string;
-  password: string;
-}
-
-// Interfaz para recoger la respuesta del servidor
-export interface loginRes {
-  user: {
-    username: string;
-    sessionToken: string;
+// tslint:disable-next-line:class-name
+interface loginRes {
+  success: boolean;
+  message: string;
+  token: string;
+  userdata: {
+    id: number;
+    user_name: string;
     email: string;
-    id: string;
   };
-}
-
-export interface loginRefreshRes {
-  username: string;
-  sessionToken: string;
-  email: string;
-  id: string;
-}
-
-export interface SignoutRes {
-  status: boolean;
-}
-
-// Interfaz para recoger errores
-export interface errorRes {
-  info: string;
 }
 
 @Injectable()
 export class AuthService {
-  public baseURL: string = "http://18.212.103.97:4000/api/";
+  public baseURL = 'http://localhost:8000/api/v1/';
   public Register: User;
   private logInErrorSubject = new Subject<string>();
 
@@ -56,9 +40,9 @@ export class AuthService {
   }
 
   public register(user: User): Observable<string> {
-    return this.http.post<User>(this.baseURL + "register", user).pipe(
+    return this.http.post<User>(this.baseURL + 'register', user).pipe(
       map(res => {
-        return "OK";
+        return 'OK';
       }),
       catchError(this.handleError)
     );
@@ -66,13 +50,14 @@ export class AuthService {
 
   /* Realiza la petición de login con los datos del usuario y recibe el resultado
   Posteriormente guarda el ID y el token de sesión en el navegador */
-  public login(user: LoginInfo): Observable<User> {
-    return this.http.post<loginRes>(this.baseURL + "login", user).pipe(
+  public login(loginobj: LoginObject): Observable<Session> {
+    return this.http.post<loginRes>(this.baseURL + 'login', {email: loginobj.email, password: loginobj.password}).pipe(
       map(res => {
-        localStorage.setItem("user_id", res.user.id);
-        localStorage.setItem("user_token", res.user.sessionToken);
+        console.log(res);
+        localStorage.setItem('user_id', res.userdata.id.toString());
+        localStorage.setItem('user_token', res.token);
 
-        return new User(res.user.username, res.user.email, res.user.id);
+        return new Session(res.token, new User(res.userdata.user_name, res.userdata.email, res.userdata.id));
       }),
       catchError(this.handleError)
     );
@@ -81,14 +66,14 @@ export class AuthService {
   /* Comprueba si existe un token de sesión almacenado en el navegador
   Si existe, manda una petición al servidor para que recoger los datos del usuario  */
   public loginRefresh(): Observable<User> {
-    if (localStorage.getItem("user_id") && localStorage.getItem("user_token")) {
-      console.log(`ID del usuario: ${localStorage.getItem("user_id")}`);
-      console.log(`Token del usuario: ${localStorage.getItem("user_token")}`);
+    if (localStorage.getItem('user_id') && localStorage.getItem('user_token')) {
+      console.log(`ID del usuario: ${localStorage.getItem('user_id')}`);
+      console.log(`Token del usuario: ${localStorage.getItem('user_token')}`);
       try {
         return this.http
-          .post<loginRefreshRes>(this.baseURL + "refreshLogin", {
-            user_id: localStorage.getItem("user_id"),
-            user_token: localStorage.getItem("user_token")
+          .post(this.baseURL + 'refreshLogin', {
+            user_id: localStorage.getItem('user_id'),
+            user_token: localStorage.getItem('user_token')
           })
           .pipe(
             map(res => {
@@ -103,32 +88,30 @@ export class AuthService {
       } catch (error) {
         /* En caso de error, lo mejor es hacer una petición para que el servidor borre los token de sesión
         y borrar el localStorage */
-        console.log("Ha ocurrido un error");
+        console.log('Ha ocurrido un error');
       }
     }
   }
 
   public cerrarSesion(): Observable<boolean> {
-    const id = localStorage.getItem("user_id");
-    const token = localStorage.getItem("user_token");
+    const id = localStorage.getItem('user_id');
+    const token = localStorage.getItem('user_token');
     if (id && token) {
       try {
         return this.http
-          .post<SignoutRes>(this.baseURL + "signout", {
-            user_id: id,
-            user_token: token
-          })
+          .get(this.baseURL + 'logout', { headers: {authorization: 'Bearer ' + token}})
           .pipe(
             map(res => {
-              localStorage.removeItem("user_id");
-              localStorage.removeItem("user_token");
-              this.router.navigateByUrl("/");
+              console.log(res);
+              localStorage.removeItem('user_id');
+              localStorage.removeItem('user_token');
+              this.router.navigateByUrl('/');
 
-              return res.status;
+              return res.success;
             })
           );
       } catch (error) {
-        this.logInErrorSubject.next("Algo ha salido mal");
+        this.logInErrorSubject.next('Algo ha salido mal :(');
       }
     }
   }
@@ -138,26 +121,26 @@ export class AuthService {
   }
 
   handleError(error) {
-    let errorMessage = "";
+    let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
       // client-side error
       errorMessage = `Error: ${error.error.message}`;
     } else {
       // Error del servidor
       if (error.status === 409) {
-        errorMessage = "Ya existe un usuario registrado con ese correo.";
+        errorMessage = 'Ya existe un usuario registrado con ese correo.';
       }
       if (error.status === 500) {
-        errorMessage = "Algo salió mal.";
+        errorMessage = 'Algo salió mal.';
       }
       if (error.status === 500) {
-        errorMessage = "Algo salió mal.";
+        errorMessage = 'Algo salió mal.';
       }
       if (error.status === 404) {
-        errorMessage = "Usuario no encontrado. Revise los datos.";
+        errorMessage = 'Usuario no encontrado. Revise los datos.';
       }
       if (error.status === 401) {
-        errorMessage = "Contraseña incorrecta.";
+        errorMessage = 'Contraseña incorrecta.';
       }
     }
     return throwError(errorMessage);

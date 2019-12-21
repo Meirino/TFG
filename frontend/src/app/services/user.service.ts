@@ -1,24 +1,15 @@
-import { Injectable, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-
-export class User {
-  username: string;
-  password: string;
-  email: string;
-  id: string;
-
-  constructor(user: string, email, id) {
-    (this.username = user), (this.email = email), (this.id = id);
-  }
-}
+import { Injectable, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { User } from '../models/user';
+import {Session} from '../models/session';
 
 @Injectable()
 export class UserService implements OnInit {
-  private baseURL: string = "http://18.212.103.97:4000/api/";
+  private baseURL = 'http://18.212.103.97:4000/api/';
 
-  public currentUser = undefined;
-  public botUser = new User("AI", "AI@bot.com", "bot");
+  public currentUser: Session = undefined;
+  public botUser = new User('AI', 'AI@bot.com', 'bot');
 
   constructor(private http: HttpClient) {}
 
@@ -33,20 +24,20 @@ export class UserService implements OnInit {
     new_pass: string;
     new_email: string;
   }) {
-    if (options.new_name === "") {
+    if (options.new_name === '') {
       options.new_name = this.currentUser.username;
     }
-    if (options.new_email === "") {
+    if (options.new_email === '') {
       options.new_email = this.currentUser.email;
     }
-    if (options.new_pass === "") {
+    if (options.new_pass === '') {
       options.new_pass = undefined;
     }
 
     this.http
-      .put(this.baseURL + "datos", {
+      .put(this.baseURL + 'datos', {
         id: this.currentUser.id,
-        options: options
+        options
       })
       .subscribe(result => {
         this.currentUser.username = options.new_name;
@@ -57,7 +48,7 @@ export class UserService implements OnInit {
 
   completarEjercicio(ejercicio_id: Number) {
     this.http
-      .put(this.baseURL + "ejercicios", {
+      .put(this.baseURL + 'ejercicios', {
         ejercicio: ejercicio_id,
         id: this.currentUser.id
       })
@@ -67,16 +58,16 @@ export class UserService implements OnInit {
   }
 
   getUserLessonProgress() {
-    return this.http.get(this.baseURL + "lecciones/" + this.currentUser.id);
+    return this.http.get(this.baseURL + 'lecciones/' + this.currentUser.id);
   }
 
   getUserExerciseProgress() {
-    return this.http.get(this.baseURL + "ejercicios/" + this.currentUser.id);
+    return this.http.get(this.baseURL + 'ejercicios/' + this.currentUser.id);
   }
 
   cambiarAvatar(archivo: File) {
     const formData: FormData = new FormData();
     formData.append(this.currentUser.id, archivo, archivo.name);
-    return this.http.post(this.baseURL + "avatar", formData);
+    return this.http.post(this.baseURL + 'avatar', formData);
   }
 }

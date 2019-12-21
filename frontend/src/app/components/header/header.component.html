@@ -9,11 +9,11 @@
       <a (click)="cerrarSesion()" id="apagado" class="">Cerrar sesión</a>
     </mz-navbar-item-container>
     <mz-navbar-item-container *ngIf=this.userService.currentUser [align]="'right'">
-      <img class="circle responsive-img" src="/avatars/0{{this.userService.currentUser.id}}.jpg"
+      <img class="circle responsive-img" src="/avatars/0{{this.userService.currentUser.user.id}}.jpg"
         style="height:60px;padding:5px;">
     </mz-navbar-item-container>
     <mz-navbar-item-container *ngIf=this.userService.currentUser [align]="'right'">
-      <a routerLink="/perfil" id="userspace" class="">{{this.userService.currentUser.username}}</a>
+      <a routerLink="/perfil" id="userspace" class="">{{this.userService.currentUser.user.username}}</a>
     </mz-navbar-item-container>
   </mz-navbar>
 </div>

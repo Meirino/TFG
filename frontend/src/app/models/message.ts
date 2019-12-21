@@ -1,4 +1,5 @@
-import { User } from "../services/user.service";
+import {User} from './user';
+
 
 export class Message {
   content: string;

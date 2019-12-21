@@ -87,6 +87,7 @@ let login = (req, res) => {
                 });
             } else {
                 let user_data = result[0];
+                console.log(user_data);
                 user_email = user_data.email;
                 user_hashed_password = user_data.password;
 

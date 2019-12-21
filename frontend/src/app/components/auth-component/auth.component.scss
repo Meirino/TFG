@@ -2,8 +2,11 @@
   padding-top: 10px;
 }
 
-.card {
-  padding: 8px;
-  padding-top: 2px;
-  margin-top: 20px;
+.example-card {
+  max-width: 400px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
 }

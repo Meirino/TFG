@@ -31,7 +31,7 @@ function buscarUsuario(email, callback) {
     if (err) {
       return callback(null, null);
     } else {
-      if (result.length == 0) return callback(null, undefined);
+      if (result.length === 0) return callback(null, undefined);
 
       /* En caso de encontrarlo, devolver el primer usuario de la lista de coincidencias.
       Siempre debería ser una lista de un solo elemento debido a que el campo email es un campo único. */
