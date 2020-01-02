@@ -31,6 +31,7 @@ import { IndexComponent } from './components/index-component/index.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AlertModule } from 'ngx-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { AlertModule } from 'ngx-bootstrap';
     MzProgressModule,
     MzButtonModule,
     FontAwesomeModule,
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [DialogflowService, AuthService, UserService],
   bootstrap: [AppComponent]

@@ -176,11 +176,28 @@ let logout = (req, res) => {
                     message: 'El token no es válido'
                 });
             } else {
-                client.del(token);
-                res.status(204).send({
-                    success: true,
-                    message: 'La sesión se ha eliminado'
-                });
+                client.del(token, function(err, response) {
+                    if (response === 1) {
+                        return res.status(204).send({
+                            success: true,
+                            message: 'La sesión se ha eliminado',
+                            token: '',
+                            userdata: undefined
+                        });
+                    } else{
+                        console.log("No hay sesiones registradas.");
+                        return res.status(404).send({
+                            success: false,
+                            message: 'La sesión no se ha encontrado',
+                            token: '',
+                            userdata: {
+                                id: 0,
+                                user_name: '',
+                                email: ''
+                            }
+                        });
+                    }
+                })
             }
         });
     } else {
@@ -191,9 +208,38 @@ let logout = (req, res) => {
     }
 };
 
+let getSession = (req, res) => {
+    let token = req.headers['x-access-token'] || req.headers['authorization'];
+
+    if(!token) {
+        if (token.startsWith('Bearer')) {
+            // Eliminar Bearer del string
+            token = token.slice(7, token.length);
+        }
+        jwt.verify(token, config.secret, (err, decoded) => {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: 'El token no es válido'
+                });
+            } else {
+                client.get(token, (data) => {
+                    res.status(200).send({
+                        success: true,
+                        message: 'La sesión se ha recuperado',
+                        token: token,
+                        userdata: data
+                    });
+                });
+            }
+        });
+    }
+};
+
 module.exports = {
     checkToken: checkToken,
     login: login,
     index: index,
-    logout: logout
+    logout: logout,
+    getSession: getSession
 };

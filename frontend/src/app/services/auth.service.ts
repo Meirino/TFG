@@ -12,7 +12,7 @@ import { LoginObject } from '../models/login';
 import { Session } from '../models/session';
 
 // tslint:disable-next-line:class-name
-interface loginRes {
+export interface loginRes {
   success: boolean;
   message: string;
   token: string;
@@ -65,24 +65,23 @@ export class AuthService {
 
   /* Comprueba si existe un token de sesión almacenado en el navegador
   Si existe, manda una petición al servidor para que recoger los datos del usuario  */
-  public loginRefresh(): Observable<User> {
+  public loginRefresh(): Observable<Session> {
     if (localStorage.getItem('user_id') && localStorage.getItem('user_token')) {
       console.log(`ID del usuario: ${localStorage.getItem('user_id')}`);
       console.log(`Token del usuario: ${localStorage.getItem('user_token')}`);
       try {
         return this.http
-          .post(this.baseURL + 'refreshLogin', {
-            user_id: localStorage.getItem('user_id'),
-            user_token: localStorage.getItem('user_token')
-          })
+          .get<loginRes>(this.baseURL + 'refreshLogin', { headers: {authorization: 'Bearer ' + localStorage.getItem('user_token')}})
           .pipe(
             map(res => {
-              this.userService.currentUser = new User(
-                res.username,
-                res.email,
-                res.id
+              return new Session(
+                res.token,
+                new User(
+                  res.userdata.user_name,
+                  res.userdata.email,
+                  res.userdata.id
+                )
               );
-              return new User(res.username, res.email, res.id);
             })
           );
       } catch (error) {
@@ -93,23 +92,13 @@ export class AuthService {
     }
   }
 
-  public cerrarSesion(): Observable<boolean> {
+  public cerrarSesion(): Observable<loginRes> {
     const id = localStorage.getItem('user_id');
     const token = localStorage.getItem('user_token');
     if (id && token) {
       try {
         return this.http
-          .get(this.baseURL + 'logout', { headers: {authorization: 'Bearer ' + token}})
-          .pipe(
-            map(res => {
-              console.log(res);
-              localStorage.removeItem('user_id');
-              localStorage.removeItem('user_token');
-              this.router.navigateByUrl('/');
-
-              return res.success;
-            })
-          );
+          .get<loginRes>(this.baseURL + 'logout', { headers: {authorization: 'Bearer ' + token}});
       } catch (error) {
         this.logInErrorSubject.next('Algo ha salido mal :(');
       }

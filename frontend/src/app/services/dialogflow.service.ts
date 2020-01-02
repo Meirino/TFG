@@ -1,23 +1,23 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { UserService } from "./user.service";
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { UserService } from './user.service';
 
 @Injectable()
 export class DialogflowService {
-  public baseURL: string = "http://18.212.103.97:4000/api/chat";
-  private nextContext: string = "";
+  public baseURL = 'http://18.212.103.97:4000/api/chat';
+  private nextContext = '';
   public httpOptions = {
     headers: new HttpHeaders({
-      "Content-Type": "application/json"
+      'Content-Type': 'application/json'
     })
   };
 
   constructor(public http: HttpClient, public userService: UserService) {}
 
   public getResponse(query: string): Observable<string> {
-    let data = {};
+    const data = {};
     return this.http
       .post<any>(
         this.baseURL,
@@ -26,8 +26,8 @@ export class DialogflowService {
       )
       .pipe(
         map(res => {
-          if (res.intent === "secureBrowsing - Phising Final") {
-            console.log("¡Lección completada!");
+          if (res.intent === 'secureBrowsing - Phising Final') {
+            console.log('¡Lección completada!');
             this.completeLesson(2);
           }
           this.nextContext = res.context;
@@ -36,11 +36,12 @@ export class DialogflowService {
       );
   }
 
-  public completeLesson(id: Number) {
+  public completeLesson(id: number) {
     this.http
-      .put("http://18.212.103.97:4000/api/lecciones", {
+      .put('http://18.212.103.97:4000/api/lecciones', {
         leccion: id,
-        usuario: parseInt(this.userService.currentUser.id)
+        // tslint:disable-next-line:radix
+        usuario: parseInt(this.userService.currentUser.user.id)
       })
       .subscribe(result => {
         console.log(result);

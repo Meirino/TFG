@@ -25,10 +25,10 @@ export class UserService implements OnInit {
     new_email: string;
   }) {
     if (options.new_name === '') {
-      options.new_name = this.currentUser.username;
+      options.new_name = this.currentUser.user.username;
     }
     if (options.new_email === '') {
-      options.new_email = this.currentUser.email;
+      options.new_email = this.currentUser.user.email;
     }
     if (options.new_pass === '') {
       options.new_pass = undefined;
@@ -36,12 +36,12 @@ export class UserService implements OnInit {
 
     this.http
       .put(this.baseURL + 'datos', {
-        id: this.currentUser.id,
+        id: this.currentUser.user.id,
         options
       })
       .subscribe(result => {
-        this.currentUser.username = options.new_name;
-        this.currentUser.email = options.new_email;
+        this.currentUser.user.username = options.new_name;
+        this.currentUser.user.email = options.new_email;
       });
     console.log(options);
   }
@@ -50,7 +50,7 @@ export class UserService implements OnInit {
     this.http
       .put(this.baseURL + 'ejercicios', {
         ejercicio: ejercicio_id,
-        id: this.currentUser.id
+        id: this.currentUser.user.id
       })
       .subscribe(result => {
         console.log(result);
@@ -58,16 +58,16 @@ export class UserService implements OnInit {
   }
 
   getUserLessonProgress() {
-    return this.http.get(this.baseURL + 'lecciones/' + this.currentUser.id);
+    return this.http.get(this.baseURL + 'lecciones/' + this.currentUser.user.id);
   }
 
   getUserExerciseProgress() {
-    return this.http.get(this.baseURL + 'ejercicios/' + this.currentUser.id);
+    return this.http.get(this.baseURL + 'ejercicios/' + this.currentUser.user.id);
   }
 
   cambiarAvatar(archivo: File) {
     const formData: FormData = new FormData();
-    formData.append(this.currentUser.id, archivo, archivo.name);
+    formData.append(this.currentUser.user.id, archivo, archivo.name);
     return this.http.post(this.baseURL + 'avatar', formData);
   }
 }

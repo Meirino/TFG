@@ -6,7 +6,7 @@
       <mz-navbar-item *ngIf=this.userService.currentUser><a routerLink="/ejercicios">Ejercicios</a></mz-navbar-item>
     </mz-navbar-item-container>
     <mz-navbar-item-container *ngIf=this.userService.currentUser [align]="'right'">
-      <a (click)="cerrarSesion()" id="apagado" class="">Cerrar sesión</a>
+      <a (click)="logOut()" id="apagado" class="">Cerrar sesión</a>
     </mz-navbar-item-container>
     <mz-navbar-item-container *ngIf=this.userService.currentUser [align]="'right'">
       <img class="circle responsive-img" src="/avatars/0{{this.userService.currentUser.user.id}}.jpg"

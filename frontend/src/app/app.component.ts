@@ -1,14 +1,14 @@
-import { Component, OnInit } from "@angular/core";
-import { AuthService } from "./services/auth.service";
-import { UserService } from "./services/user.service";
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = "TFG-Angular";
+  title = 'TFG-Angular';
 
   constructor(public auth: AuthService, public user: UserService) {}
 
@@ -17,6 +17,8 @@ export class AppComponent implements OnInit {
       this.auth.loginRefresh().subscribe(res => {
         this.user.currentUser = res;
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
