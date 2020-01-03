@@ -171,40 +171,20 @@ let logout = (req, res) => {
     if (token) {
         jwt.verify(token, config.secret, (err, decoded) => {
             if (err) {
-                return res.json({
-                    success: false,
-                    message: 'El token no es válido'
-                });
+                return res.json(false);
             } else {
                 client.del(token, function(err, response) {
                     if (response === 1) {
-                        return res.status(204).send({
-                            success: true,
-                            message: 'La sesión se ha eliminado',
-                            token: '',
-                            userdata: undefined
-                        });
+                        return res.status(204).send(true);
                     } else{
                         console.log("No hay sesiones registradas.");
-                        return res.status(404).send({
-                            success: false,
-                            message: 'La sesión no se ha encontrado',
-                            token: '',
-                            userdata: {
-                                id: 0,
-                                user_name: '',
-                                email: ''
-                            }
-                        });
+                        return res.status(404).send(false);
                     }
                 })
             }
         });
     } else {
-        return res.json({
-            success: false,
-            message: 'No se ha enviado un token'
-        });
+        return res.json(false);
     }
 };
 

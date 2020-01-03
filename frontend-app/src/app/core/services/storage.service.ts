@@ -21,8 +21,9 @@ export class StorageService {
   }
 
   loadSessionData(): Session {
-    // Se comprueba si existe una sesión/usuario ya guardado
+    // Se comprueba si existe una sesión/usuario ya guardad
     const sessionStr = this.localStorageService.getItem('currentUser');
+    console.log(sessionStr);
     return (sessionStr) ? JSON.parse(sessionStr) as Session : null;
   }
 

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StorageService } from './services/storage.service';
+import {AuthorizatedGuard} from './guards/auth.guard';
 
 
 
@@ -10,7 +11,8 @@ import { StorageService } from './services/storage.service';
     CommonModule
   ],
   providers: [
-    StorageService
+    StorageService,
+    AuthorizatedGuard
   ]
 })
 export class CoreModule { }

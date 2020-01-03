@@ -44,6 +44,19 @@ export class AuthenticationService {
     );
   }
 
+  logout(): Observable<boolean> {
+    const id = localStorage.getItem('user_id');
+    const token = localStorage.getItem('user_token');
+    if (id && token) {
+      try {
+        return this.http
+          .get<boolean>(this.baseURL + 'logout', { headers: {authorization: 'Bearer ' + token}});
+      } catch (error) {
+        this.logInErrorSubject.next('Algo ha salido mal :(');
+      }
+    }
+  }
+
   handleError(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
