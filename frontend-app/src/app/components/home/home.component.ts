@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../../core/models/user.model";
-import {StorageService} from "../../core/services/storage.service";
-import {AuthenticationService} from "../../services/auth.service";
+import {User} from '../../core/models/user.model';
+import {StorageService} from '../../core/services/storage.service';
+import {AuthenticationService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -18,8 +18,6 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.storageService.getCurrentToken());
-    console.log(this.storageService.isAuthenticated());
     this.user = this.storageService.getCurrentUser();
   }
   public logout() {

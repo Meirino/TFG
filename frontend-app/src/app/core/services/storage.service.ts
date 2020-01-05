@@ -21,9 +21,8 @@ export class StorageService {
   }
 
   loadSessionData(): Session {
-    // Se comprueba si existe una sesión/usuario ya guardad
+    // Se comprueba si existe una sesión/usuario ya guardada
     const sessionStr = this.localStorageService.getItem('currentUser');
-    console.log(sessionStr);
     return (sessionStr) ? JSON.parse(sessionStr) as Session : null;
   }
 
@@ -33,6 +32,7 @@ export class StorageService {
 
   removeCurrentSession() {
     this.localStorageService.removeItem('currentUser');
+    this.localStorageService.clear();
     this.currentSession = null;
   }
 

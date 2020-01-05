@@ -35,9 +35,6 @@ export class AuthenticationService {
     return this.http.post<loginRes>(this.baseURL + 'login', loginObj).pipe(
       map(res => {
         console.log(res);
-        localStorage.setItem('user_id', res.userdata.id.toString());
-        localStorage.setItem('user_token', res.token);
-
         return new Session(res.token, new User(res.userdata.user_name, res.userdata.email, res.userdata.id));
       }),
       catchError(this.handleError)
@@ -45,12 +42,12 @@ export class AuthenticationService {
   }
 
   logout(): Observable<boolean> {
-    const id = localStorage.getItem('user_id');
-    const token = localStorage.getItem('user_token');
-    if (id && token) {
+    const currentUser = localStorage.getItem('currentUser');
+    const session = JSON.parse(currentUser) as Session;
+    if (session) {
       try {
         return this.http
-          .get<boolean>(this.baseURL + 'logout', { headers: {authorization: 'Bearer ' + token}});
+          .get<boolean>(this.baseURL + 'logout', { headers: {authorization: 'Bearer ' + session.token}});
       } catch (error) {
         this.logInErrorSubject.next('Algo ha salido mal :(');
       }
