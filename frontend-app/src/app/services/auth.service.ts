@@ -54,6 +54,21 @@ export class AuthenticationService {
     }
   }
 
+  register(newUser: User): Observable<boolean> {
+    return this.http.post<boolean>(this.baseURL + 'register', {
+      email: newUser.email,
+      username: newUser.username,
+      password: newUser.password
+    }).pipe(
+      map(
+        (res) => {
+          return res;
+        }
+      ),
+      catchError(this.handleError)
+    );
+  }
+
   handleError(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

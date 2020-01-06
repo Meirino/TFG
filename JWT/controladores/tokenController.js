@@ -216,10 +216,53 @@ let getSession = (req, res) => {
     }
 };
 
+let register = (req, res) => {
+    const connection = mysql.createConnection(connection_data);
+    connection.connect();
+
+    /* Si los valores de contraseña y email son válidos, uso BCrypt para generar una salt
+    y usarla para encriptar la contraseña con ella.
+    Finalmente se guarda en MySQL los datos del usuario */
+    if (req.body.email && req.body.password && req.body.username) {
+        bcrypt.genSalt(saltRounds, function (err, salt) {
+            bcrypt.hash(req.body.password, salt, function (err, hash) {
+                let new_user = squel.insert()
+                    .into("users")
+                    .set("username", req.body.username)
+                    .set("usermail", req.body.email)
+                    .set("password", hash)
+                    .set("salt", salt)
+                    .toString();
+
+                connection.query(new_user, (err, result) => {
+                    // Inicializar las tablas de ejercicios y lecciones completadas
+
+                    if (!err) {
+                        // ejercicioscontroller.inicializarEjercicios(result.insertId);
+                        // chatcontroller.inicializarLecciones(result.insertId);
+                        res.status(201).send(true);
+                    }
+
+                    if (err && err.errno === 1062) {
+                        res.status(409).send(false);
+                    }
+
+                    if (err && err.errno !== 1062) {
+                        res.status(500).send(false);
+                    }
+                });
+            });
+        });
+    } else {
+        res.status(501).send("Datos incorrectos");
+    }
+};
+
 module.exports = {
     checkToken: checkToken,
     login: login,
     index: index,
     logout: logout,
-    getSession: getSession
+    getSession: getSession,
+    register: register
 };
