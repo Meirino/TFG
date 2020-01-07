@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {User} from "../../core/models/user.model";
-import {AuthenticationService} from "../../services/auth.service";
-import {StorageService} from "../../core/services/storage.service";
+import {User} from '../../core/models/user.model';
+import {AuthenticationService} from '../../services/auth.service';
+import {StorageService} from '../../core/services/storage.service';
 
 @Component({
   selector: 'app-registration',
@@ -17,9 +18,11 @@ export class RegistrationComponent implements OnInit {
   public user: User;
   public passwordConfirm = '';
   public error: string = undefined;
+  public success: boolean = undefined;
 
   constructor(private formBuilder: FormBuilder,
               private authenticationService: AuthenticationService,
+              private router: Router,
               private storageService: StorageService) { }
 
   ngOnInit() {
@@ -39,10 +42,14 @@ export class RegistrationComponent implements OnInit {
   public register() {
     if (this.checkPassword()) {
       this.authenticationService.register(this.user).subscribe(
-        res => res ? this.error = 'Ha funcionado' : this.error = 'Error al registrarse',
-        err => this.error = err.message
+        res => res ? this.success = true : this.error = 'Error al registrarse',
+        err => this.error = err
       );
     }
+  }
+
+  public redirectToLogin() {
+      this.router.navigate(['/login']);
   }
 
 }
