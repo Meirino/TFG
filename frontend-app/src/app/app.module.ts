@@ -17,6 +17,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { HomeComponent } from './components/home/home.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import {MatStepperModule} from "@angular/material/stepper";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import {MatStepperModule} from "@angular/material/stepper";
     MatCardModule,
     FormsModule,
     MatProgressSpinnerModule,
-    MatStepperModule
+    MatStepperModule,
+    MatToolbarModule,
+    MatMenuModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]
