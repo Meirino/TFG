@@ -19,13 +19,19 @@ import { RegistrationComponent } from './components/registration/registration.co
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatMenuModule} from "@angular/material/menu";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +48,11 @@ import {MatMenuModule} from "@angular/material/menu";
     MatProgressSpinnerModule,
     MatStepperModule,
     MatToolbarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSidenavModule,
+    LayoutModule,
+    MatIconModule,
+    MatListModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]
