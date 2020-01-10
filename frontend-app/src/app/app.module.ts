@@ -24,6 +24,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MatListModule } from '@angular/material/list';
     LoginComponent,
     HomeComponent,
     RegistrationComponent,
-    NavigationComponent
+    NavigationComponent,
+    PerfilComponent
   ],
   imports: [
     BrowserModule,
