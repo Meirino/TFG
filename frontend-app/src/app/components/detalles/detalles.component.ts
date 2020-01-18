@@ -10,6 +10,7 @@ import {StorageService} from '../../core/services/storage.service';
 export class DetallesComponent implements OnInit {
 
   public user: User;
+  public editable = false;
 
   constructor(
     private storageService: StorageService
@@ -19,4 +20,11 @@ export class DetallesComponent implements OnInit {
     this.user = this.storageService.getCurrentUser();
   }
 
+  edit() {
+    this.editable = true;
+  }
+
+  saveChanges() {
+    this.editable = false;
+  }
 }
