@@ -11,7 +11,7 @@ export class AppComponent {
   title = 'frontend-app';
 
   constructor(
-    private storageService: StorageService,
+    public storageService: StorageService,
     private authenticationService: AuthenticationService
   ) {}
 }

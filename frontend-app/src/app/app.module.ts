@@ -34,8 +34,11 @@ import {
   MzHalfwayFabModule,
   MzIconMdiModule,
   MzIconModule,
-  MzInputModule
-} from "ngx-materialize";
+  MzInputModule, MzNavbarModule
+} from 'ngx-materialize';
+
+import { ChatComponent } from './components/chat/chat.component';
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,9 @@ import {
     RegistrationComponent,
     NavigationComponent,
     PerfilComponent,
-    DetallesComponent
+    DetallesComponent,
+    ChatComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +79,9 @@ import {
     MzHalfwayFabModule,
     MzIconModule,
     MzInputModule,
-    MzIconMdiModule
+    MzIconMdiModule,
+    MzNavbarModule,
+    HttpClientModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]

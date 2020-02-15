@@ -8,11 +8,16 @@ export class StorageService {
 
   private localStorageService;
   private currentSession: Session = null;
+  private bot = new User('AI', 'AI@bot.com', 'bot');
 
   constructor(private router: Router) {
     // Se usa el navegador para guardar la información de sesión
     this.localStorageService = localStorage;
     this.currentSession = this.loadSessionData();
+  }
+
+  get getBot(): User {
+    return this.bot;
   }
 
   setCurrentSession(session: Session) {

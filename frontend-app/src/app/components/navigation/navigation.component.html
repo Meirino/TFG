@@ -9,7 +9,7 @@
     </div>
     <hr>
     <mat-nav-list>
-      <a mat-list-item>Chat</a>
+      <a mat-list-item [routerLink]="[{outlets: { internal: ['chat']}}]">Chat</a>
       <a mat-list-item>Ejercicios</a>
       <a mat-list-item [routerLink]="[{outlets: { internal: ['profile']}}]">Perfil</a>
       <a mat-list-item (click)="logout()">Cerrar sesión</a>
